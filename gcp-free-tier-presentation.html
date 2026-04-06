@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GCP Free Tier — $300 Credit & VM Instances</title>
+<style>
+  :root {
+    --bg: #0a0f1a;
+    --slide-bg: #111827;
+    --text: #e8e8f0;
+    --text-dim: #8888a0;
+    --accent-blue: #4fc3f7;
+    --accent-purple: #ce93d8;
+    --accent-green: #81c784;
+    --accent-orange: #ffb74d;
+    --accent-pink: #f48fb1;
+    --accent-teal: #80cbc4;
+    --accent-yellow: #fff176;
+    --accent-red: #ef5350;
+    --border: #1e2a3a;
+    --code-bg: #0d1117;
+    --gcp-blue: #4285f4;
+    --gcp-red: #ea4335;
+    --gcp-yellow: #fbbc05;
+    --gcp-green: #34a853;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .presentation {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+  }
+
+  .slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 80px;
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+    background: var(--bg);
+  }
+
+  .slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  .slide.exit-left {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+
+  .slide-title h1 {
+    font-size: 3.2rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .slide-title .subtitle {
+    font-size: 1.3rem;
+    color: var(--text-dim);
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .slide h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .slide .section-label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+
+  .slide .content {
+    max-width: 900px;
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  .slide p, .slide li {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  .slide ul { list-style: none; padding: 0; }
+  .slide ul li { padding: 6px 0 6px 28px; position: relative; }
+  .slide ul li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--gcp-blue);
+    font-weight: bold;
+  }
+
+  .analogy {
+    background: var(--slide-bg);
+    border-left: 4px solid var(--accent-orange);
+    padding: 14px 22px;
+    border-radius: 0 8px 8px 0;
+    margin: 16px 0;
+    font-style: italic;
+  }
+
+  .analogy .label {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--accent-orange);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .table-wrap { overflow-x: auto; margin: 14px 0; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  th, td {
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  th {
+    color: var(--gcp-blue);
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  td { color: var(--text); }
+  tr:hover td { background: rgba(255,255,255,0.03); }
+
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px;
+    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    overflow-x: auto;
+    margin: 14px 0;
+  }
+
+  .code-block .comment { color: #6a6a8a; }
+  .code-block .cmd { color: var(--accent-green); }
+  .code-block .flag { color: var(--accent-yellow); }
+  .code-block .string { color: var(--accent-orange); }
+
+  .concept-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-top: 16px;
+  }
+
+  .concept-card {
+    background: var(--slide-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+
+  .concept-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--gcp-blue);
+  }
+
+  .concept-card h3 {
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+
+  .concept-card p {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 16px;
+    width: 100%;
+    max-width: 900px;
+  }
+
+  .col {
+    background: var(--slide-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .col h3 { font-size: 1.1rem; margin-bottom: 10px; }
+  .col ul li { font-size: 0.9rem; padding: 5px 0 5px 24px; }
+
+  .flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 18px 0;
+  }
+
+  .flow-node {
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  .flow-arrow { font-size: 1.3rem; color: var(--text-dim); }
+
+  .highlight { color: var(--gcp-blue); font-weight: 600; }
+  .highlight-green { color: var(--gcp-green); font-weight: 600; }
+  .highlight-yellow { color: var(--gcp-yellow); font-weight: 600; }
+  .highlight-red { color: var(--gcp-red); font-weight: 600; }
+  .highlight-orange { color: var(--accent-orange); font-weight: 600; }
+
+  .gcp-logo {
+    font-size: 4rem;
+    margin-bottom: 10px;
+  }
+
+  .credit-badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--gcp-blue), var(--gcp-green));
+    color: white;
+    padding: 12px 32px;
+    border-radius: 30px;
+    font-size: 2rem;
+    font-weight: 700;
+    margin: 16px 0;
+  }
+
+  .step-list {
+    counter-reset: step;
+    list-style: none;
+    padding: 0;
+  }
+
+  .step-list li {
+    counter-increment: step;
+    padding: 10px 0 10px 50px;
+    position: relative;
+  }
+
+  .step-list li::before {
+    content: counter(step);
+    position: absolute;
+    left: 0;
+    top: 8px;
+    width: 32px;
+    height: 32px;
+    background: var(--gcp-blue);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+  }
+
+  .warning-box {
+    background: rgba(239,83,80,0.1);
+    border-left: 4px solid var(--accent-red);
+    padding: 14px 20px;
+    border-radius: 0 8px 8px 0;
+    margin: 14px 0;
+  }
+
+  .warning-box .label {
+    font-weight: 600;
+    color: var(--accent-red);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .tip-box {
+    background: rgba(52,168,83,0.1);
+    border-left: 4px solid var(--gcp-green);
+    padding: 14px 20px;
+    border-radius: 0 8px 8px 0;
+    margin: 14px 0;
+  }
+
+  .tip-box .label {
+    font-weight: 600;
+    color: var(--gcp-green);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 28px;
+    background: rgba(10,15,26,0.9);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--border);
+    z-index: 100;
+  }
+
+  .nav button {
+    background: var(--slide-bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 9px 22px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+  }
+
+  .nav button:hover {
+    background: var(--gcp-blue);
+    color: var(--bg);
+    border-color: var(--gcp-blue);
+  }
+
+  .nav button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .nav button:disabled:hover {
+    background: var(--slide-bg);
+    color: var(--text);
+    border-color: var(--border);
+  }
+
+  .slide-counter { font-size: 0.85rem; color: var(--text-dim); }
+
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gcp-blue), var(--gcp-green));
+    transition: width 0.3s ease;
+    z-index: 100;
+  }
+
+  .key-hint {
+    position: fixed;
+    top: 14px; right: 18px;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    z-index: 100;
+    opacity: 0.6;
+  }
+
+  kbd {
+    background: var(--slide-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 7px;
+    font-family: inherit;
+    font-size: 0.75rem;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .slide.active .animate-in { animation: fadeInUp 0.5s ease forwards; }
+  .slide.active .delay-1 { animation-delay: 0.1s; opacity: 0; }
+  .slide.active .delay-2 { animation-delay: 0.2s; opacity: 0; }
+  .slide.active .delay-3 { animation-delay: 0.3s; opacity: 0; }
+  .slide.active .delay-4 { animation-delay: 0.4s; opacity: 0; }
+  .slide.active .delay-5 { animation-delay: 0.5s; opacity: 0; }
+  .slide.active .delay-6 { animation-delay: 0.6s; opacity: 0; }
+
+  @media (max-width: 768px) {
+    .slide { padding: 40px 24px; }
+    .slide h2 { font-size: 1.5rem; }
+    .slide-title h1 { font-size: 2rem; }
+    .two-col { grid-template-columns: 1fr; }
+    .concept-grid { grid-template-columns: 1fr; }
+    .flow { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="key-hint"><kbd>←</kbd> <kbd>→</kbd> or <kbd>Space</kbd> to navigate</div>
+
+<div class="presentation" id="presentation">
+
+  <!-- SLIDE 1: Title -->
+  <div class="slide slide-title active" data-slide="1">
+    <div class="gcp-logo animate-in delay-1">☁️</div>
+    <h1 class="animate-in delay-2" style="background: linear-gradient(135deg, var(--gcp-blue), var(--gcp-green)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">GCP Free Tier</h1>
+    <div class="credit-badge animate-in delay-3">$300 Free Credit</div>
+    <p class="subtitle animate-in delay-4">What you get, what you can build, and how to not burn through it</p>
+  </div>
+
+  <!-- SLIDE 2: What is GCP? -->
+  <div class="slide" data-slide="2">
+    <p class="section-label animate-in delay-1">Introduction</p>
+    <h2 class="animate-in delay-2">What is GCP?</h2>
+    <div class="content animate-in delay-3">
+      <p><span class="highlight">Google Cloud Platform</span> is Google's cloud computing service. It gives you access to infrastructure you can rent by the second.</p>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h3 style="color: var(--gcp-blue);">💻 Compute</h3>
+          <p>Virtual machines, serverless functions, containers</p>
+        </div>
+        <div class="concept-card">
+          <h3 style="color: var(--gcp-green);">💾 Storage</h3>
+          <p>File storage, databases, object storage</p>
+        </div>
+        <div class="concept-card">
+          <h3 style="color: var(--gcp-yellow);">🤖 AI/ML</h3>
+          <p>Pre-built AI APIs, Vertex AI, GPU instances</p>
+        </div>
+        <div class="concept-card">
+          <h3 style="color: var(--accent-pink);">🌐 Networking</h3>
+          <p>Load balancers, DNS, CDN</p>
+        </div>
+      </div>
+      <div class="analogy">
+        <div class="label">Analogy</div>
+        If your laptop is a single apartment, GCP is an entire city of infrastructure you can rent by the second.
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: The $300 Credit -->
+  <div class="slide" data-slide="3">
+    <p class="section-label animate-in delay-1">Free Credit</p>
+    <h2 class="animate-in delay-2">The $300 Free Credit</h2>
+    <div class="content animate-in delay-3">
+      <div class="two-col">
+        <div class="col">
+          <h3 style="color: var(--gcp-green);">What You Get</h3>
+          <ul>
+            <li><span class="highlight-green">$300 USD</span> in free credits</li>
+            <li>Valid for <span class="highlight-green">90 days</span> from signup</li>
+            <li>Applies to <span class="highlight-green">almost all</span> GCP services</li>
+            <li>Needs a card for verification</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3 style="color: var(--accent-orange);">What It Buys You</h3>
+          <ul>
+            <li><span class="highlight-yellow">e2-micro VM</span> — runs 24/7 for all 90 days</li>
+            <li><span class="highlight-yellow">e2-medium VM</span> — ~17 days of 24/7 runtime</li>
+            <li><span class="highlight-yellow">GPU (T4)</span> — ~30-50 hours of compute</li>
+            <li><span class="highlight-yellow">Cloud Storage</span> — ~100GB for pennies/month</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tip-box">
+        <div class="label">Key Rule</div>
+        Credits don't auto-convert to paid. When they expire, services stop. <strong>No surprise charges.</strong>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: Always Free Tier -->
+  <div class="slide" data-slide="4">
+    <p class="section-label animate-in delay-1">Beyond the Credit</p>
+    <h2 class="animate-in delay-2">Always Free Tier</h2>
+    <div class="content animate-in delay-3">
+      <p>Even after your $300 expires, these resources stay <span class="highlight-green">free forever</span>:</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Resource</th><th>Free Limit</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="highlight-green">e2-micro VM</span></td><td>1 instance/month (US regions only)</td></tr>
+            <tr><td><span class="highlight-green">Cloud Storage</span></td><td>5 GB-months</td></tr>
+            <tr><td><span class="highlight-green">Cloud Functions</span></td><td>2M invocations/month</td></tr>
+            <tr><td><span class="highlight-green">Cloud Build</span></td><td>120 build-minutes/day</td></tr>
+            <tr><td><span class="highlight-green">BigQuery</span></td><td>1 TB queries/month, 10 GB storage</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="tip-box">
+        <div class="label">Pro Tip</div>
+        The e2-micro VM is always free in US regions. You can run a small server 24/7 forever at zero cost.
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: What is a VM? -->
+  <div class="slide" data-slide="5">
+    <p class="section-label animate-in delay-1">Core Concept</p>
+    <h2 class="animate-in delay-2">What is a VM Instance?</h2>
+    <div class="content animate-in delay-3">
+      <p>A <span class="highlight">Virtual Machine</span> is a computer running inside Google's data centers. You pick the CPU, RAM, storage, and OS — and it works exactly like a real computer.</p>
+      <div class="analogy">
+        <div class="label">Analogy</div>
+        It's like renting a computer in Google's building. You SSH into it, install software, run code — but it lives in their data center, not on your desk.
+      </div>
+      <div class="flow">
+        <div class="flow-node" style="background: rgba(66,133,244,0.2); border: 1px solid var(--gcp-blue); color: var(--gcp-blue);">Your Laptop</div>
+        <div class="flow-arrow">→ SSH →</div>
+        <div class="flow-node" style="background: rgba(52,168,83,0.2); border: 1px solid var(--gcp-green); color: var(--gcp-green);">GCP VM Instance</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node" style="background: rgba(251,188,5,0.2); border: 1px solid var(--gcp-yellow); color: var(--gcp-yellow);">Google Data Center</div>
+      </div>
+      <p style="color: var(--text-dim); font-size: 0.95rem;">You connect over the internet. It behaves exactly like a local machine.</p>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: Creating a VM -->
+  <div class="slide" data-slide="6">
+    <p class="section-label animate-in delay-1">Getting Started</p>
+    <h2 class="animate-in delay-2">Creating Your First VM</h2>
+    <div class="content animate-in delay-3">
+      <ol class="step-list">
+        <li>Go to <span class="highlight">console.cloud.google.com</span></li>
+        <li>Navigate to <strong>Compute Engine → VM Instances</strong></li>
+        <li>Click <strong>Create Instance</strong></li>
+        <li>Configure:
+          <ul>
+            <li><strong>Name:</strong> <code>my-first-vm</code></li>
+            <li><strong>Region:</strong> <code>us-central1</code> (cheapest, free-tier eligible)</li>
+            <li><strong>Machine:</strong> <code>e2-micro</code> (free) or <code>e2-medium</code> (more power)</li>
+            <li><strong>Boot disk:</strong> Ubuntu 22.04 LTS</li>
+            <li><strong>Firewall:</strong> Allow HTTP and HTTPS</li>
+          </ul>
+        </li>
+        <li>Click <strong>Create</strong> — wait ~60 seconds</li>
+      </ol>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: Connecting & Exploring -->
+  <div class="slide" data-slide="7">
+    <p class="section-label animate-in delay-1">Hands-On</p>
+    <h2 class="animate-in delay-2">Connect & Explore</h2>
+    <div class="content animate-in delay-3">
+      <div class="code-block">
+<span class="comment"># SSH into your VM from terminal</span>
+<span class="cmd">gcloud compute ssh</span> my-first-vm <span class="flag">--zone=us-central1-a</span>
+
+<span class="comment"># Or use browser-based SSH in GCP Console</span>
+
+<span class="comment"># Once connected, explore:</span>
+<span class="cmd">uname -a</span>          <span class="comment"># Check OS</span>
+<span class="cmd">free -h</span>           <span class="comment"># Check RAM</span>
+<span class="cmd">df -h</span>             <span class="comment"># Check disk space</span>
+<span class="cmd">nproc</span>             <span class="comment"># Check CPU cores</span>
+
+<span class="comment"># Install tools:</span>
+<span class="cmd">sudo apt update</span>
+<span class="cmd">sudo apt install</span> python3 python3-pip git nodejs npm
+      </div>
+      <div class="tip-box">
+        <div class="label">Tip</div>
+        Browser-based SSH requires no setup — just click "SSH" next to your VM in the console.
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: What Can You Build? -->
+  <div class="slide" data-slide="8">
+    <p class="section-label animate-in delay-1">Use Cases</p>
+    <h2 class="animate-in delay-2">What You Can Build</h2>
+    <div class="content animate-in delay-3">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Project</th><th>Machine Type</th><th>Monthly Cost</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>🐧 Learning Linux</td><td>e2-micro</td><td><span class="highlight-green">Free</span></td></tr>
+            <tr><td>🌐 Hosting a website</td><td>e2-micro</td><td><span class="highlight-green">Free</span></td></tr>
+            <tr><td>🤖 Discord bot / automation</td><td>e2-small</td><td>~$5-8</td></tr>
+            <tr><td>🧪 AI experiments</td><td>e2-medium</td><td>~$15-25</td></tr>
+            <tr><td>🎮 GPU ML training</td><td>n1 + T4 GPU</td><td>~$250/mo</td></tr>
+            <tr><td>📦 Web app backend</td><td>e2-medium</td><td>~$15-25</td></tr>
+            <tr><td>🗄️ Database server</td><td>e2-medium + 50GB</td><td>~$20-30</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: Practical Projects -->
+  <div class="slide" data-slide="9">
+    <p class="section-label animate-in delay-1">Projects</p>
+    <h2 class="animate-in delay-2">5 Projects With $300 Credit</h2>
+    <div class="content animate-in delay-3">
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h3 style="color: var(--gcp-green);">1. Always-On Dev Server</h3>
+          <p><strong>VM:</strong> e2-micro (Always Free)<br><strong>Use:</strong> Git server, code runner<br><strong>Cost:</strong> $0 forever</p>
+        </div>
+        <div class="concept-card">
+          <h3 style="color: var(--gcp-blue);">2. AI API Proxy</h3>
+          <p><strong>VM:</strong> e2-medium<br><strong>Use:</strong> Route requests to OpenRouter<br><strong>Duration:</strong> ~20 months</p>
+        </div>
+        <div class="concept-card">
+          <h3 style="color: var(--gcp-yellow);">3. GPU ML Training</h3>
+          <p><strong>VM:</strong> n1-standard-4 + T4 GPU<br><strong>Use:</strong> Train models, run LLMs<br><strong>Duration:</strong> ~30 days</p>
+        </div>
+        <div class="concept-card">
+          <h3 style="color: var(--accent-pink);">4. Full-Stack App</h3>
+          <p><strong>VM:</strong> e2-medium + Cloud SQL<br><strong>Use:</strong> Complete web app with DB<br><strong>Duration:</strong> ~10 months</p>
+        </div>
+        <div class="concept-card">
+          <h3 style="color: var(--accent-teal);">5. AI Agent Hosting</h3>
+          <p><strong>VM:</strong> e2-medium + Open Manus<br><strong>Use:</strong> 24/7 AI agent<br><strong>Duration:</strong> ~12-20 months</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: Cost Management -->
+  <div class="slide" data-slide="10">
+    <p class="section-label animate-in delay-1">Important</p>
+    <h2 class="animate-in delay-2">Cost Management</h2>
+    <div class="content animate-in delay-3">
+      <div class="two-col">
+        <div class="col">
+          <h3 style="color: var(--gcp-green);">Do This</h3>
+          <ul>
+            <li>Set budget alerts at 25%, 50%, 75%, 90%</li>
+            <li>Stop VMs when not in use</li>
+            <li>Use <span class="highlight-green">us-central1</span> (cheapest region)</li>
+            <li>Delete unused disks</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3 style="color: var(--accent-red);">Don't Do This</h3>
+          <ul>
+            <li>Leave GPU instances running</li>
+            <li>Use expensive regions (europe, asia)</li>
+            <li>Forget about disk costs</li>
+            <li>Upgrade to paid accidentally</li>
+          </ul>
+        </div>
+      </div>
+      <div class="code-block">
+<span class="comment"># Stop a VM (stops compute billing)</span>
+<span class="cmd">gcloud compute instances stop</span> my-first-vm <span class="flag">--zone=us-central1-a</span>
+
+<span class="comment"># Start it again when needed</span>
+<span class="cmd">gcloud compute instances start</span> my-first-vm <span class="flag">--zone=us-central1-a</span>
+
+<span class="comment"># Delete completely (removes everything)</span>
+<span class="cmd">gcloud compute instances delete</span> my-first-vm <span class="flag">--zone=us-central1-a</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11: GCP + AI -->
+  <div class="slide" data-slide="11">
+    <p class="section-label animate-in delay-1">Integration</p>
+    <h2 class="animate-in delay-2">GCP + AI Tools</h2>
+    <div class="content animate-in delay-3">
+      <p>Combine GCP infrastructure with your AI development tools:</p>
+      <div class="flow" style="flex-direction: column; gap: 4px;">
+        <div class="flow-node" style="background: rgba(128,203,196,0.2); border: 1px solid var(--accent-teal); color: var(--accent-teal); min-width: 300px;">🤖 AI Agent (Open Manus / Custom)</div>
+        <div class="flow-arrow">↓ runs on</div>
+        <div class="flow-node" style="background: rgba(66,133,244,0.2); border: 1px solid var(--gcp-blue); color: var(--gcp-blue); min-width: 250px;">☁️ GCP VM (e2-medium)</div>
+        <div class="flow-arrow">↓ calls</div>
+        <div class="flow-node" style="background: rgba(255,183,77,0.2); border: 1px solid var(--accent-orange); color: var(--accent-orange); min-width: 250px;">🔌 OpenRouter API (free models)</div>
+        <div class="flow-arrow">↓ stores in</div>
+        <div class="flow-node" style="background: rgba(52,168,83,0.2); border: 1px solid var(--gcp-green); color: var(--gcp-green); min-width: 250px;">💾 Cloud SQL + Cloud Storage</div>
+      </div>
+      <div class="tip-box">
+        <div class="label">Example</div>
+        Run an AI coding assistant 24/7 on an e2-medium (~$15-25/mo) with free LLM models via OpenRouter. Total cost: just the VM.
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 12: First Hour Guide -->
+  <div class="slide" data-slide="12">
+    <p class="section-label animate-in delay-1">Action Plan</p>
+    <h2 class="animate-in delay-2">Your First Hour on GCP</h2>
+    <div class="content animate-in delay-3">
+      <div class="concept-grid" style="grid-template-columns: 1fr;">
+        <div class="concept-card" style="display: flex; gap: 14px; align-items: center;">
+          <div style="font-size: 1.5rem; min-width: 30px; color: var(--gcp-blue); font-weight: 700;">0-10m</div>
+          <div><h3>Account Setup</h3><p>Sign up at cloud.google.com/free, confirm $300 credit is active</p></div>
+        </div>
+        <div class="concept-card" style="display: flex; gap: 14px; align-items: center;">
+          <div style="font-size: 1.5rem; min-width: 30px; color: var(--gcp-green); font-weight: 700;">10-20m</div>
+          <div><h3>Create VM</h3><p>e2-micro in us-central1, Ubuntu 22.04, allow HTTP/HTTPS</p></div>
+        </div>
+        <div class="concept-card" style="display: flex; gap: 14px; align-items: center;">
+          <div style="font-size: 1.5rem; min-width: 30px; color: var(--gcp-yellow); font-weight: 700;">20-40m</div>
+          <div><h3>Connect & Explore</h3><p>SSH in, run <code>uname -a</code>, <code>free -h</code>, install Python/Node.js</p></div>
+        </div>
+        <div class="concept-card" style="display: flex; gap: 14px; align-items: center;">
+          <div style="font-size: 1.5rem; min-width: 30px; color: var(--accent-pink); font-weight: 700;">40-60m</div>
+          <div><h3>Deploy Something</h3><p>Simple Python web server, access at external IP</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 13: Quick Reference -->
+  <div class="slide" data-slide="13">
+    <p class="section-label animate-in delay-1">Cheat Sheet</p>
+    <h2 class="animate-in delay-2">Quick Reference</h2>
+    <div class="content animate-in delay-3">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Question</th><th>Answer</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>How long does $300 last?</td><td>90 days max, or until spent</td></tr>
+            <tr><td>Can I extend the credit?</td><td>No, but Always Free tier continues</td></tr>
+            <tr><td>What happens when it expires?</td><td>Services stop, no auto-charge</td></tr>
+            <tr><td>Best VM for learning?</td><td><span class="highlight-green">e2-micro</span> (Always Free in US)</td></tr>
+            <tr><td>Best VM for AI experiments?</td><td><span class="highlight">e2-medium</span> or n1 + T4 GPU</td></tr>
+            <tr><td>Cheapest region?</td><td><span class="highlight">us-central1</span> (Iowa)</td></tr>
+            <tr><td>Can I host websites?</td><td>Yes, even on free tier</td></tr>
+            <tr><td>Can I run AI agents?</td><td>Yes, e2-medium is sufficient</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 14: End -->
+  <div class="slide slide-title" data-slide="14">
+    <h1 class="animate-in delay-1" style="background: linear-gradient(135deg, var(--gcp-blue), var(--gcp-green)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Get Started</h1>
+    <p class="subtitle animate-in delay-2">cloud.google.com/free — $300 credit, 90 days, zero risk</p>
+    <div class="animate-in delay-3" style="text-align: center;">
+      <p style="color: var(--text-dim);">Sign up → Create e2-micro VM → SSH in → Deploy something</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="nav">
+  <button id="prevBtn" onclick="changeSlide(-1)" disabled>← Previous</button>
+  <span class="slide-counter" id="slideCounter">1 / 14</span>
+  <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
+</div>
+
+<script>
+  let currentSlide = 1;
+  const totalSlides = 14;
+
+  function changeSlide(direction) {
+    const newSlide = currentSlide + direction;
+    if (newSlide < 1 || newSlide > totalSlides) return;
+
+    const current = document.querySelector(`.slide[data-slide="${currentSlide}"]`);
+    const next = document.querySelector(`.slide[data-slide="${newSlide}"]`);
+
+    if (direction > 0) {
+      current.classList.remove('active');
+      current.classList.add('exit-left');
+      setTimeout(() => current.classList.remove('exit-left'), 500);
+    } else {
+      current.classList.remove('active');
+    }
+
+    next.classList.add('active');
+    currentSlide = newSlide;
+
+    document.getElementById('prevBtn').disabled = currentSlide === 1;
+    document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+    document.getElementById('slideCounter').textContent = `${currentSlide} / ${totalSlides}`;
+    document.getElementById('progressBar').style.width = `${(currentSlide / totalSlides) * 100}%`;
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); changeSlide(1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); changeSlide(-1); }
+  });
+
+  document.getElementById('progressBar').style.width = `${(1 / totalSlides) * 100}%`;
+</script>
+
+</body>
+</html>

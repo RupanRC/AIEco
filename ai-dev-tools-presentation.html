@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Development Tools — Comparison Guide</title>
+<style>
+  :root {
+    --bg: #0f0f1a;
+    --slide-bg: #1a1a2e;
+    --text: #e8e8f0;
+    --text-dim: #8888a0;
+    --accent-blue: #4fc3f7;
+    --accent-purple: #ce93d8;
+    --accent-green: #81c784;
+    --accent-orange: #ffb74d;
+    --accent-pink: #f48fb1;
+    --accent-teal: #80cbc4;
+    --accent-yellow: #fff176;
+    --accent-red: #ef5350;
+    --border: #2a2a40;
+    --code-bg: #12121f;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  .presentation {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+  }
+
+  .slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 80px;
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+    background: var(--bg);
+  }
+
+  .slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  .slide.exit-left {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+
+  .slide-title h1 {
+    font-size: 3rem;
+    font-weight: 700;
+    margin-bottom: 16px;
+    text-align: center;
+  }
+
+  .slide-title .subtitle {
+    font-size: 1.3rem;
+    color: var(--text-dim);
+    text-align: center;
+    margin-bottom: 30px;
+  }
+
+  .slide h2 {
+    font-size: 2rem;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .slide .section-label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+
+  .slide .content {
+    max-width: 900px;
+    width: 100%;
+    margin-top: 16px;
+  }
+
+  .slide p, .slide li {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  .slide ul { list-style: none; padding: 0; }
+  .slide ul li { padding: 6px 0 6px 28px; position: relative; }
+  .slide ul li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--accent-blue);
+    font-weight: bold;
+  }
+
+  .analogy {
+    background: var(--slide-bg);
+    border-left: 4px solid var(--accent-orange);
+    padding: 14px 22px;
+    border-radius: 0 8px 8px 0;
+    margin: 16px 0;
+    font-style: italic;
+  }
+
+  .analogy .label {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--accent-orange);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .table-wrap { overflow-x: auto; margin: 14px 0; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+  }
+
+  th, td {
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  th {
+    color: var(--accent-purple);
+    font-weight: 600;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  td { color: var(--text); }
+  tr:hover td { background: rgba(255,255,255,0.03); }
+
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 18px;
+    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    overflow-x: auto;
+    margin: 14px 0;
+  }
+
+  .code-block .comment { color: #6a6a8a; }
+  .code-block .cmd { color: var(--accent-green); }
+  .code-block .flag { color: var(--accent-yellow); }
+  .code-block .string { color: var(--accent-orange); }
+
+  .concept-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 14px;
+    margin-top: 16px;
+  }
+
+  .concept-card {
+    background: var(--slide-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+
+  .concept-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-blue);
+  }
+
+  .concept-card h3 {
+    font-size: 1rem;
+    margin-bottom: 6px;
+  }
+
+  .concept-card p {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 16px;
+    width: 100%;
+    max-width: 900px;
+  }
+
+  .col {
+    background: var(--slide-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 20px;
+  }
+
+  .col h3 { font-size: 1.1rem; margin-bottom: 10px; }
+  .col ul li { font-size: 0.9rem; padding: 5px 0 5px 24px; }
+
+  .flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 18px 0;
+  }
+
+  .flow-node {
+    padding: 10px 18px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    text-align: center;
+  }
+
+  .flow-arrow { font-size: 1.3rem; color: var(--text-dim); }
+
+  .highlight { color: var(--accent-blue); font-weight: 600; }
+  .highlight-purple { color: var(--accent-purple); font-weight: 600; }
+  .highlight-green { color: var(--accent-green); font-weight: 600; }
+  .highlight-orange { color: var(--accent-orange); font-weight: 600; }
+  .highlight-pink { color: var(--accent-pink); font-weight: 600; }
+  .highlight-teal { color: var(--accent-teal); font-weight: 600; }
+  .highlight-yellow { color: var(--accent-yellow); font-weight: 600; }
+
+  .tool-badge {
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 6px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin: 2px;
+  }
+
+  .badge-ide { background: rgba(128,203,196,0.2); border: 1px solid var(--accent-teal); color: var(--accent-teal); }
+  .badge-cli { background: rgba(79,195,247,0.2); border: 1px solid var(--accent-blue); color: var(--accent-blue); }
+  .badge-fw { background: rgba(206,147,216,0.2); border: 1px solid var(--accent-purple); color: var(--accent-purple); }
+
+  .workflow-card {
+    background: var(--slide-bg);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 18px;
+    margin: 10px 0;
+  }
+
+  .workflow-card h3 { margin-bottom: 10px; }
+
+  .workflow-step {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 6px 0;
+    font-size: 0.95rem;
+  }
+
+  .workflow-step .arrow { color: var(--text-dim); }
+
+  .tip-box {
+    background: rgba(129,199,132,0.1);
+    border-left: 4px solid var(--accent-green);
+    padding: 14px 20px;
+    border-radius: 0 8px 8px 0;
+    margin: 14px 0;
+  }
+
+  .tip-box .label {
+    font-weight: 600;
+    color: var(--accent-green);
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  .nav {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 14px 28px;
+    background: rgba(15,15,26,0.9);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--border);
+    z-index: 100;
+  }
+
+  .nav button {
+    background: var(--slide-bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 9px 22px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+  }
+
+  .nav button:hover {
+    background: var(--accent-blue);
+    color: var(--bg);
+    border-color: var(--accent-blue);
+  }
+
+  .nav button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .nav button:disabled:hover {
+    background: var(--slide-bg);
+    color: var(--text);
+    border-color: var(--border);
+  }
+
+  .slide-counter { font-size: 0.85rem; color: var(--text-dim); }
+
+  .progress-bar {
+    position: fixed;
+    top: 0; left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+    transition: width 0.3s ease;
+    z-index: 100;
+  }
+
+  .key-hint {
+    position: fixed;
+    top: 14px; right: 18px;
+    font-size: 0.75rem;
+    color: var(--text-dim);
+    z-index: 100;
+    opacity: 0.6;
+  }
+
+  kbd {
+    background: var(--slide-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 7px;
+    font-family: inherit;
+    font-size: 0.75rem;
+  }
+
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .slide.active .animate-in { animation: fadeInUp 0.5s ease forwards; }
+  .slide.active .delay-1 { animation-delay: 0.1s; opacity: 0; }
+  .slide.active .delay-2 { animation-delay: 0.2s; opacity: 0; }
+  .slide.active .delay-3 { animation-delay: 0.3s; opacity: 0; }
+  .slide.active .delay-4 { animation-delay: 0.4s; opacity: 0; }
+  .slide.active .delay-5 { animation-delay: 0.5s; opacity: 0; }
+  .slide.active .delay-6 { animation-delay: 0.6s; opacity: 0; }
+
+  @media (max-width: 768px) {
+    .slide { padding: 40px 24px; }
+    .slide h2 { font-size: 1.5rem; }
+    .slide-title h1 { font-size: 2rem; }
+    .two-col { grid-template-columns: 1fr; }
+    .concept-grid { grid-template-columns: 1fr; }
+    .flow { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); }
+  }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="key-hint"><kbd>←</kbd> <kbd>→</kbd> or <kbd>Space</kbd> to navigate</div>
+
+<div class="presentation" id="presentation">
+
+  <!-- SLIDE 1: Title -->
+  <div class="slide slide-title active" data-slide="1">
+    <h1 class="animate-in delay-1" style="background: linear-gradient(135deg, var(--accent-teal), var(--accent-blue), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">AI Development Tools</h1>
+    <p class="subtitle animate-in delay-2">Capabilities, Comparisons & How to Choose</p>
+    <div class="animate-in delay-3" style="display: flex; gap: 10px; flex-wrap: wrap; justify-content: center;">
+      <span class="tool-badge badge-ide">Roo Code</span>
+      <span class="tool-badge badge-ide">Cline</span>
+      <span class="tool-badge badge-cli">Claude Code</span>
+      <span class="tool-badge badge-cli">OpenCode</span>
+      <span class="tool-badge badge-cli">Gemini CLI</span>
+      <span class="tool-badge badge-cli">OpenClaw</span>
+      <span class="tool-badge badge-fw">Open Manus</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: The Landscape -->
+  <div class="slide" data-slide="2">
+    <p class="section-label animate-in delay-1">Overview</p>
+    <h2 class="animate-in delay-2">The Landscape</h2>
+    <div class="content animate-in delay-3">
+      <p>AI development tools fall into <span class="highlight">three categories</span>:</p>
+      <div class="concept-grid">
+        <div class="concept-card" style="border-color: var(--accent-teal);">
+          <h3 style="color: var(--accent-teal);">🖥️ IDE Extensions</h3>
+          <p>Plugins that live inside your code editor. See your code, edit files, run commands.</p>
+          <p style="margin-top: 10px;"><span class="tool-badge badge-ide">Roo Code</span> <span class="tool-badge badge-ide">Cline</span></p>
+        </div>
+        <div class="concept-card" style="border-color: var(--accent-blue);">
+          <h3 style="color: var(--accent-blue);">⌨️ CLI Tools</h3>
+          <p>Terminal-based AI assistants. No GUI needed. Great for servers and remote work.</p>
+          <p style="margin-top: 10px;"><span class="tool-badge badge-cli">Claude Code</span> <span class="tool-badge badge-cli">OpenCode</span> <span class="tool-badge badge-cli">Gemini CLI</span></p>
+        </div>
+        <div class="concept-card" style="border-color: var(--accent-purple);">
+          <h3 style="color: var(--accent-purple);">🔧 Frameworks</h3>
+          <p>Libraries to build your own custom AI agents and workflows.</p>
+          <p style="margin-top: 10px;"><span class="tool-badge badge-fw">Open Manus</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: Roo Code -->
+  <div class="slide" data-slide="3">
+    <p class="section-label animate-in delay-1">IDE Extension</p>
+    <h2 class="animate-in delay-2"><span class="highlight-teal">Roo Code</span></h2>
+    <div class="content animate-in delay-3">
+      <p>VS Code extension that acts as an <span class="highlight-teal">AI pair programmer</span> with autonomous capabilities.</p>
+      <div class="two-col">
+        <div class="col">
+          <h3 style="color: var(--accent-teal);">Capabilities</h3>
+          <ul>
+            <li>Reads entire codebase for context</li>
+            <li>Generates and edits code directly</li>
+            <li>Runs terminal commands</li>
+            <li>Debugs errors from stack traces</li>
+            <li>Multiple API provider support</li>
+            <li>Autonomous plan → execute → verify</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3 style="color: var(--accent-green);">Best For</h3>
+          <ul>
+            <li>Day-to-day coding assistance</li>
+            <li>Refactoring existing code</li>
+            <li>Writing tests</li>
+            <li>Understanding unfamiliar code</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tip-box">
+        <div class="label">Setup</div>
+        Install from VS Code Marketplace → Add API key (OpenRouter recommended) → Select model → Start coding
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: Cline -->
+  <div class="slide" data-slide="4">
+    <p class="section-label animate-in delay-1">IDE Extension</p>
+    <h2 class="animate-in delay-2"><span class="highlight-teal">Cline</span></h2>
+    <div class="content animate-in delay-4">
+      <p>Autonomous AI coding agent for VS Code with <span class="highlight-teal">browser automation</span> and <span class="highlight-pink">MCP support</span>.</p>
+      <div class="two-col">
+        <div class="col">
+          <h3 style="color: var(--accent-teal);">Capabilities</h3>
+          <ul>
+            <li>Everything Roo Code does, plus:</li>
+            <li><span class="highlight-teal">Browser automation</span> — click, fill, scrape</li>
+            <li><span class="highlight-pink">Full MCP support</span></li>
+            <li>Create entire project structures</li>
+            <li>Web search for documentation</li>
+            <li>Self-correction from errors</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3 style="color: var(--accent-green);">Best For</h3>
+          <ul>
+            <li>Building projects from scratch</li>
+            <li>Web scraping tasks</li>
+            <li>Browser interaction workflows</li>
+            <li>Independent autonomous work</li>
+          </ul>
+        </div>
+      </div>
+      <div class="tip-box">
+        <div class="label">Setup</div>
+        Install from VS Code Marketplace → Configure API → Enable browser & MCP in settings → Give it a task
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: Roo vs Cline -->
+  <div class="slide" data-slide="5">
+    <p class="section-label animate-in delay-1">Comparison</p>
+    <h2 class="animate-in delay-2">Roo Code vs Cline</h2>
+    <div class="content animate-in delay-3">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Feature</th><th style="color: var(--accent-teal);">Roo Code</th><th style="color: var(--accent-teal);">Cline</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Code editing</td><td>✅</td><td>✅</td></tr>
+            <tr><td>Terminal commands</td><td>✅</td><td>✅</td></tr>
+            <tr><td>Multi-file operations</td><td>✅</td><td>✅</td></tr>
+            <tr><td>Browser automation</td><td>❌</td><td>✅</td></tr>
+            <tr><td>MCP support</td><td>Limited</td><td>✅ Full</td></tr>
+            <tr><td>Web search</td><td>❌</td><td>✅</td></tr>
+            <tr><td>Autonomous mode</td><td>✅</td><td>✅</td></tr>
+            <tr><td><strong>Best for</strong></td><td><strong>Coding tasks</strong></td><td><strong>Full-stack automation</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="text-align: center; color: var(--text-dim); margin-top: 12px;">Both are free extensions — you only pay for API usage.</p>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: Claude Code -->
+  <div class="slide" data-slide="6">
+    <p class="section-label animate-in delay-1">CLI Tool</p>
+    <h2 class="animate-in delay-2"><span class="highlight">Claude Code</span></h2>
+    <div class="content animate-in delay-3">
+      <p>Anthropic's official CLI tool, designed specifically for <span class="highlight">codebase interaction</span>.</p>
+      <div class="two-col">
+        <div class="col">
+          <h3 style="color: var(--accent-blue);">Capabilities</h3>
+          <ul>
+            <li>Deep codebase understanding</li>
+            <li>Multi-file edits across projects</li>
+            <li>Runs tests and fixes failures</li>
+            <li>Git operations (commit, branch, diff)</li>
+            <li>Natural language task execution</li>
+            <li>Strong reasoning abilities</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3 style="color: var(--accent-green);">Best For</h3>
+          <ul>
+            <li>Large codebase refactoring</li>
+            <li>Complex multi-file changes</li>
+            <li>Code review and analysis</li>
+            <li>When you need reasoning over speed</li>
+          </ul>
+        </div>
+      </div>
+      <div class="code-block">
+<span class="comment"># Install</span>
+<span class="cmd">npm install -g</span> @anthropic-ai/claude-code
+
+<span class="comment"># Start interactive session</span>
+<span class="cmd">claude</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: Other CLI Tools -->
+  <div class="slide" data-slide="7">
+    <p class="section-label animate-in delay-1">CLI Tools</p>
+    <h2 class="animate-in delay-2">OpenCode, Gemini CLI, OpenClaw</h2>
+    <div class="content animate-in delay-3">
+      <div class="concept-grid">
+        <div class="concept-card" style="border-color: var(--accent-blue);">
+          <h3 style="color: var(--accent-blue);">⌨️ OpenCode</h3>
+          <p>Open-source CLI AI coding assistant. Supports multiple API providers. Fully customizable.</p>
+          <p style="margin-top: 8px;"><strong>Best:</strong> Terminal workflows, server/remote dev, open-source preference</p>
+          <p style="margin-top: 8px; color: var(--accent-green);">Free (open source) + API costs</p>
+        </div>
+        <div class="concept-card" style="border-color: var(--accent-green);">
+          <h3 style="color: var(--accent-green);">⌨️ Gemini CLI</h3>
+          <p>Google's CLI for Gemini models. Multimodal (text + images). GCP integration. Generous free tier.</p>
+          <p style="margin-top: 8px;"><strong>Best:</strong> Google ecosystem, multimodal AI, GCP tasks</p>
+          <p style="margin-top: 8px; color: var(--accent-green);">Generous free tier available</p>
+        </div>
+        <div class="concept-card" style="border-color: var(--accent-purple);">
+          <h3 style="color: var(--accent-purple);">⌨️ OpenClaw</h3>
+          <p>Open-source CLI AI tool. Lightweight, extensible. Good for custom workflows and scripting.</p>
+          <p style="margin-top: 8px;"><strong>Best:</strong> Lightweight CLI, custom workflows, open-source stack</p>
+          <p style="margin-top: 8px; color: var(--accent-green);">Free (open source) + API costs</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: Open Manus -->
+  <div class="slide" data-slide="8">
+    <p class="section-label animate-in delay-1">Framework</p>
+    <h2 class="animate-in delay-2"><span class="highlight-purple">Open Manus</span></h2>
+    <div class="content animate-in delay-3">
+      <p>Open-source <span class="highlight-purple">Python framework</span> for building custom AI agents.</p>
+      <div class="two-col">
+        <div class="col">
+          <h3 style="color: var(--accent-purple);">Capabilities</h3>
+          <ul>
+            <li>Build agents with specific skills</li>
+            <li>Define workflows and task pipelines</li>
+            <li>Integrate with any API provider</li>
+            <li>Custom tool creation</li>
+            <li>Multi-agent coordination</li>
+          </ul>
+        </div>
+        <div class="col">
+          <h3 style="color: var(--accent-green);">Best For</h3>
+          <ul>
+            <li>Building your own AI agents</li>
+            <li>Custom automation workflows</li>
+            <li>When off-the-shelf tools don't fit</li>
+            <li>Learning how agents work</li>
+          </ul>
+        </div>
+      </div>
+      <div class="code-block">
+<span class="cmd">git clone</span> https://github.com/mannaandpoem/OpenManus
+<span class="cmd">cd</span> OpenManus
+<span class="cmd">pip install -r</span> requirements.txt
+<span class="comment"># Configure API keys and run</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: Tool Selection -->
+  <div class="slide" data-slide="9">
+    <p class="section-label animate-in delay-1">Decision Guide</p>
+    <h2 class="animate-in delay-2">"I want to..." → Use this</h2>
+    <div class="content animate-in delay-3">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Goal</th><th>Recommended Tool</th><th>Why</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>Code faster in VS Code</td><td><span class="highlight-teal">Roo Code</span></td><td>Deep editor integration, multi-provider</td></tr>
+            <tr><td>Build from scratch</td><td><span class="highlight-teal">Cline</span></td><td>Autonomous, browser, MCP</td></tr>
+            <tr><td>Refactor large codebase</td><td><span class="highlight">Claude Code</span></td><td>Strong reasoning, multi-file</td></tr>
+            <tr><td>Work on remote server</td><td><span class="highlight">OpenCode</span></td><td>CLI-based, no GUI needed</td></tr>
+            <tr><td>Use Google's models</td><td><span class="highlight-green">Gemini CLI</span></td><td>Direct Gemini access</td></tr>
+            <tr><td>Build custom agents</td><td><span class="highlight-purple">Open Manus</span></td><td>Python framework, flexible</td></tr>
+            <tr><td>Stay open-source</td><td><span class="highlight">OpenCode</span> + <span class="highlight-purple">OpenClaw</span></td><td>Fully open source stack</td></tr>
+            <tr><td>Experiment for free</td><td><span class="highlight-teal">Roo Code</span> + OpenRouter free</td><td>Zero cost to start</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: Recommended Setups -->
+  <div class="slide" data-slide="10">
+    <p class="section-label animate-in delay-1">Setups</p>
+    <h2 class="animate-in delay-2">Recommended Setups</h2>
+    <div class="content animate-in delay-3">
+      <div class="concept-grid" style="grid-template-columns: 1fr;">
+        <div class="concept-card" style="border-color: var(--accent-green);">
+          <h3 style="color: var(--accent-green);">🟢 Starter — $0/month</h3>
+          <p>VS Code: Roo Code + Cline → OpenRouter (free models)<br>
+          Terminal: OpenCode or Gemini CLI (free tier)<br>
+          <strong>Total cost: $0</strong></p>
+        </div>
+        <div class="concept-card" style="border-color: var(--accent-blue);">
+          <h3 style="color: var(--accent-blue);">🔵 Intermediate — $10-20/month</h3>
+          <p>VS Code: Cline → OpenRouter (Claude Sonnet, GPT-4)<br>
+          Terminal: Claude Code (paid API)<br>
+          GCP VM (e2-medium): Open Manus agent 24/7</p>
+        </div>
+        <div class="concept-card" style="border-color: var(--accent-orange);">
+          <h3 style="color: var(--accent-orange);">🟠 Pro — $50-100/month</h3>
+          <p>VS Code: Cline + Roo Code → Multiple API providers<br>
+          MCP servers for database, browser, git<br>
+          Terminal: Claude Code + Gemini CLI<br>
+          GCP VM (n1-standard-4): Custom agent pipeline</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11: Workflows -->
+  <div class="slide" data-slide="11">
+    <p class="section-label animate-in delay-1">In Action</p>
+    <h2 class="animate-in delay-2">Common Workflows</h2>
+    <div class="content animate-in delay-3">
+      <div class="workflow-card">
+        <h3 style="color: var(--accent-teal);">Workflow 1: Quick Code Fix</h3>
+        <div class="workflow-step"><span class="highlight-teal">You:</span> "Fix the bug in auth.py"</div>
+        <div class="workflow-step"><span class="arrow">↓</span></div>
+        <div class="workflow-step"><span class="highlight-teal">Roo Code:</span> Reads file, finds issue, proposes fix</div>
+        <div class="workflow-step"><span class="arrow">↓</span></div>
+        <div class="workflow-step"><span class="highlight-teal">You:</span> Review and accept</div>
+        <div class="workflow-step"><span class="arrow">→</span> <span style="color: var(--text-dim);">Done in 2 min instead of 20</span></div>
+      </div>
+      <div class="workflow-card">
+        <h3 style="color: var(--accent-teal);">Workflow 2: Build a Feature</h3>
+        <div class="workflow-step"><span class="highlight-teal">You:</span> "Create a user profile page with avatar upload"</div>
+        <div class="workflow-step"><span class="arrow">↓</span></div>
+        <div class="workflow-step"><span class="highlight-teal">Cline:</span> Plans → Creates routes, models, views → Runs tests → Opens browser to verify</div>
+        <div class="workflow-step"><span class="arrow">↓</span></div>
+        <div class="workflow-step"><span class="highlight-teal">You:</span> Review the complete feature</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 12: Tips for Juniors -->
+  <div class="slide" data-slide="12">
+    <p class="section-label animate-in delay-1">Advice</p>
+    <h2 class="animate-in delay-2">Tips for Juniors</h2>
+    <div class="content animate-in delay-3">
+      <div class="concept-grid" style="grid-template-columns: 1fr;">
+        <div class="concept-card" style="display: flex; gap: 14px; align-items: center;">
+          <div style="font-size: 1.5rem;">1</div>
+          <div><h3>Start with free models</h3><p>Don't pay until you've exhausted free tiers</p></div>
+        </div>
+        <div class="concept-card" style="display: flex; gap: 14px; align-items: center;">
+          <div style="font-size: 1.5rem;">2</div>
+          <div><h3>Be specific with prompts</h3><p>"Fix the login bug" is better than "fix bugs"</p></div>
+        </div>
+        <div class="concept-card" style="display: flex; gap: 14px; align-items: center;">
+          <div style="font-size: 1.5rem;">3</div>
+          <div><h3>Review every change</h3><p>AI makes mistakes. Always read what it writes.</p></div>
+        </div>
+        <div class="concept-card" style="display: flex; gap: 14px; align-items: center;">
+          <div style="font-size: 1.5rem;">4</div>
+          <div><h3>Use the right tool</h3><p>CLI for server work, IDE extensions for coding</p></div>
+        </div>
+        <div class="concept-card" style="display: flex; gap: 14px; align-items: center;">
+          <div style="font-size: 1.5rem;">5</div>
+          <div><h3>Learn the basics first</h3><p>Don't let AI write code you don't understand</p></div>
+        </div>
+        <div class="concept-card" style="display: flex; gap: 14px; align-items: center;">
+          <div style="font-size: 1.5rem;">6</div>
+          <div><h3>Set up OpenRouter first</h3><p>One key works with all tools. Start with free models.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 13: Quick Reference -->
+  <div class="slide" data-slide="13">
+    <p class="section-label animate-in delay-1">Cheat Sheet</p>
+    <h2 class="animate-in delay-2">Quick Reference Card</h2>
+    <div class="content animate-in delay-3">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr><th>Tool</th><th>Type</th><th>Platform</th><th>Cost</th><th>Best For</th></tr>
+          </thead>
+          <tbody>
+            <tr><td><span class="highlight-teal">Roo Code</span></td><td>IDE Extension</td><td>VS Code</td><td>Free + API</td><td>Daily coding</td></tr>
+            <tr><td><span class="highlight-teal">Cline</span></td><td>IDE Extension</td><td>VS Code</td><td>Free + API</td><td>Autonomous tasks</td></tr>
+            <tr><td><span class="highlight">Claude Code</span></td><td>CLI</td><td>Terminal</td><td>Paid API</td><td>Large refactors</td></tr>
+            <tr><td><span class="highlight">OpenCode</span></td><td>CLI</td><td>Terminal</td><td>Free + API</td><td>Server/remote work</td></tr>
+            <tr><td><span class="highlight-green">Gemini CLI</span></td><td>CLI</td><td>Terminal</td><td>Free tier</td><td>Google ecosystem</td></tr>
+            <tr><td><span class="highlight-purple">OpenClaw</span></td><td>CLI</td><td>Terminal</td><td>Free + API</td><td>Lightweight CLI</td></tr>
+            <tr><td><span class="highlight-purple">Open Manus</span></td><td>Framework</td><td>Python</td><td>Free + API</td><td>Custom agents</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 14: End -->
+  <div class="slide slide-title" data-slide="14">
+    <h1 class="animate-in delay-1" style="background: linear-gradient(135deg, var(--accent-teal), var(--accent-blue), var(--accent-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;">Start Building</h1>
+    <p class="subtitle animate-in delay-2">Install Roo Code + Cline → Get OpenRouter API key → Start coding for free</p>
+    <div class="animate-in delay-3" style="text-align: center;">
+      <p style="color: var(--text-dim);">Total cost to start: $0</p>
+    </div>
+  </div>
+
+</div>
+
+<div class="nav">
+  <button id="prevBtn" onclick="changeSlide(-1)" disabled>← Previous</button>
+  <span class="slide-counter" id="slideCounter">1 / 14</span>
+  <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
+</div>
+
+<script>
+  let currentSlide = 1;
+  const totalSlides = 14;
+
+  function changeSlide(direction) {
+    const newSlide = currentSlide + direction;
+    if (newSlide < 1 || newSlide > totalSlides) return;
+
+    const current = document.querySelector(`.slide[data-slide="${currentSlide}"]`);
+    const next = document.querySelector(`.slide[data-slide="${newSlide}"]`);
+
+    if (direction > 0) {
+      current.classList.remove('active');
+      current.classList.add('exit-left');
+      setTimeout(() => current.classList.remove('exit-left'), 500);
+    } else {
+      current.classList.remove('active');
+    }
+
+    next.classList.add('active');
+    currentSlide = newSlide;
+
+    document.getElementById('prevBtn').disabled = currentSlide === 1;
+    document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+    document.getElementById('slideCounter').textContent = `${currentSlide} / ${totalSlides}`;
+    document.getElementById('progressBar').style.width = `${(currentSlide / totalSlides) * 100}%`;
+  }
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowRight' || e.key === ' ') { e.preventDefault(); changeSlide(1); }
+    else if (e.key === 'ArrowLeft') { e.preventDefault(); changeSlide(-1); }
+  });
+
+  document.getElementById('progressBar').style.width = `${(1 / totalSlides) * 100}%`;
+</script>
+
+</body>
+</html>
