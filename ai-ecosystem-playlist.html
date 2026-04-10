@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Ecosystem - Course Playlist</title>
+<style>
+  :root {
+    --bg: #0f0f1a;
+    --slide-bg: #1a1a2e;
+    --text: #e8e8f0;
+    --text-dim: #8888a0;
+    --accent-blue: #4fc3f7;
+    --accent-purple: #ce93d8;
+    --accent-teal: #80cbc4;
+    --accent-pink: #f48fb1;
+    --border: #2a2a40;
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    font-family: 'Segoe UI', system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+  .sidebar {
+    width: 30%;
+    max-width: 350px;
+    background: var(--slide-bg);
+    border-right: 1px solid var(--border);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .sidebar h2 { margin-bottom: 20px; color: var(--text); }
+  .tab-btn {
+    background: transparent;
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    padding: 15px;
+    text-align: left;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: 600;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover { background: rgba(255,255,255,0.05); }
+  
+  .tab-btn.active[data-target="ai-basics"] { border-left: 4px solid var(--accent-blue); color: var(--accent-blue); background: rgba(79,195,247,0.1); }
+  .tab-btn.active[data-target="apis"] { border-left: 4px solid var(--accent-purple); color: var(--accent-purple); background: rgba(206,147,216,0.1); }
+  .tab-btn.active[data-target="agents"] { border-left: 4px solid var(--accent-teal); color: var(--accent-teal); background: rgba(128,203,196,0.1); }
+  .tab-btn.active[data-target="mcp"] { border-left: 4px solid var(--accent-pink); color: var(--accent-pink); background: rgba(244,143,177,0.1); }
+
+  .content-area {
+    flex: 1;
+    padding: 40px;
+    overflow-y: auto;
+  }
+  .tab-content { display: none; }
+  .tab-content.active { display: block; animation: fadeIn 0.3s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  .video-card {
+    background: var(--slide-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    gap: 20px;
+  }
+  .video-info { flex: 1; }
+  .video-title { font-size: 1.2rem; font-weight: bold; margin-bottom: 8px; }
+  .video-meta { font-size: 0.9rem; color: var(--text-dim); margin-bottom: 12px; }
+  .video-desc { font-size: 0.95rem; line-height: 1.5; margin-bottom: 16px; }
+  .watch-btn {
+    display: inline-block;
+    padding: 8px 16px;
+    border-radius: 6px;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9rem;
+    transition: filter 0.2s;
+  }
+  .watch-btn:hover { filter: brightness(1.2); }
+</style>
+</head>
+<body>
+  <div class="sidebar">
+    <h2>Course Playlist</h2>
+    <button class="tab-btn active" data-target="ai-basics">1. AI & LLM Basics</button>
+    <button class="tab-btn" data-target="apis">2. APIs & Providers</button>
+    <button class="tab-btn" data-target="agents">3. AI Agents & Tools</button>
+    <button class="tab-btn" data-target="mcp">4. MCP & Advanced</button>
+    <a href="ai-ecosystem-presentation-v2.html" style="margin-top:auto; color:var(--text-dim); text-decoration:none; font-size:0.9rem;">← Back to Presentation</a>
+  </div>
+  <div class="content-area">
+    <div id="ai-basics" class="tab-content active"></div>
+    <div id="apis" class="tab-content"></div>
+    <div id="agents" class="tab-content"></div>
+    <div id="mcp" class="tab-content"></div>
+  </div>
+  <script>
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById(btn.dataset.target).classList.add('active');
+      });
+    });
+  </script>
+</body>
+</html>
