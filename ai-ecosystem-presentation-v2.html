@@ -1,0 +1,1611 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The AI Ecosystem — How Everything Connects</title>
+<style>
+  :root {
+    --bg: #0f0f1a;
+    --slide-bg: #1a1a2e;
+    --text: #e8e8f0;
+    --text-dim: #8888a0;
+    --accent-blue: #4fc3f7;
+    --accent-purple: #ce93d8;
+    --accent-green: #81c784;
+    --accent-orange: #ffb74d;
+    --accent-pink: #f48fb1;
+    --accent-teal: #80cbc4;
+    --border: #2a2a40;
+    --code-bg: #12121f;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  /* Body gradient animation */
+  body {
+    font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    background: linear-gradient(-45deg, #0f0f1a, #15152a, #0f0f1a, #1a1a2e);
+    background-size: 400% 400%;
+    animation: gradientBG 15s ease infinite;
+    color: var(--text);
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+
+  @keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  .presentation {
+    width: 100vw;
+    height: 100vh;
+    position: relative;
+  }
+
+  .slide {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 80px;
+    opacity: 0;
+    transform: translateX(60px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+    pointer-events: none;
+    background: transparent;
+  }
+
+  .slide.active {
+    opacity: 1;
+    transform: translateX(0);
+    pointer-events: auto;
+  }
+
+  .slide.exit-left {
+    opacity: 0;
+    transform: translateX(-60px);
+  }
+
+  /* Grid Mode */
+  .presentation.grid-mode {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 2vw;
+    padding: 4vw;
+    overflow-y: auto;
+    align-content: flex-start;
+    justify-content: center;
+    background: var(--bg);
+  }
+  
+  .presentation.grid-mode .slide {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    transform: scale(0.2);
+    transform-origin: top left;
+    margin-right: -80vw;
+    margin-bottom: -80vh;
+    opacity: 1 !important;
+    pointer-events: auto;
+    cursor: pointer;
+    border: 10px solid var(--border);
+    border-radius: 40px;
+    background: rgba(15, 15, 26, 0.95);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    transition: transform 0.2s, border-color 0.2s, z-index 0s;
+    z-index: 1;
+  }
+  
+  .presentation.grid-mode .slide:hover {
+    transform: scale(0.22);
+    border-color: var(--accent-blue);
+    z-index: 10;
+  }
+  
+  body.grid-active .nav, 
+  body.grid-active .progress-bar, 
+  body.grid-active .key-hint {
+    display: none;
+  }
+
+  /* Title Slide */
+  .slide-title h1 {
+    font-size: clamp(1.8rem, 5vw, 3.5rem);
+    font-weight: 700;
+    background: linear-gradient(135deg, var(--accent-blue), var(--accent-purple), var(--accent-pink));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .slide-title .subtitle {
+    font-size: 1.4rem;
+    color: var(--text-dim);
+    text-align: center;
+    margin-bottom: 40px;
+  }
+
+  .slide-title .topics {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: center;
+    max-width: 800px;
+  }
+
+  .slide-title .topic-tag {
+    padding: 8px 18px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border: 1px solid var(--border);
+    background: var(--slide-bg);
+  }
+
+  /* Content Slides */
+  .slide h2 {
+    font-size: clamp(1.5rem, 4vw, 2.2rem);
+    margin-bottom: 10px;
+    text-align: center;
+  }
+
+  .slide h2 .emoji { margin-right: 10px; }
+
+  .slide .section-label {
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-dim);
+    margin-bottom: 8px;
+  }
+
+  .slide .content {
+    max-width: 900px;
+    width: 100%;
+    margin-top: 20px;
+  }
+
+  .slide p, .slide li {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--text);
+  }
+
+  .slide ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  .slide ul li {
+    padding: 8px 0 8px 28px;
+    position: relative;
+  }
+
+  .slide ul li::before {
+    content: "▸";
+    position: absolute;
+    left: 0;
+    color: var(--accent-blue);
+    font-weight: bold;
+  }
+
+  /* Analogy Box */
+  .analogy {
+    background: var(--slide-bg);
+    border-left: 4px solid var(--accent-orange);
+    padding: 16px 24px;
+    border-radius: 0 8px 8px 0;
+    margin: 20px 0;
+    font-style: italic;
+  }
+
+  .analogy .label {
+    font-style: normal;
+    font-weight: 600;
+    color: var(--accent-orange);
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 6px;
+  }
+
+  /* Key Concept Cards */
+  .concept-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
+  }
+
+  .concept-card {
+    background: var(--slide-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+    transition: transform 0.2s, border-color 0.2s;
+  }
+
+  .concept-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-blue);
+  }
+
+  .concept-card h3 {
+    font-size: 1.1rem;
+    margin-bottom: 8px;
+    color: var(--accent-blue);
+  }
+
+  .concept-card p {
+    font-size: 0.95rem;
+    color: var(--text-dim);
+    line-height: 1.5;
+  }
+
+  /* Code Block */
+  .code-block {
+    background: var(--code-bg);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 20px;
+    font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    overflow-x: auto;
+    margin: 16px 0;
+    position: relative;
+  }
+
+  .code-block .comment { color: #6a6a8a; }
+  .code-block .key { color: var(--accent-blue); }
+  .code-block .string { color: var(--accent-green); }
+  .code-block .url { color: var(--accent-pink); }
+
+  /* Copy Button */
+  .copy-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: var(--bg);
+    border: 1px solid var(--border);
+    color: var(--text-dim);
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .copy-btn:hover {
+    background: var(--accent-blue);
+    color: var(--bg);
+    border-color: var(--accent-blue);
+  }
+
+  /* Table */
+  .table-wrap {
+    overflow-x: auto;
+    margin: 16px 0;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+  }
+
+  th, td {
+    padding: 12px 16px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+  }
+
+  th {
+    color: var(--accent-purple);
+    font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  td { color: var(--text); }
+
+  tr:hover td { background: rgba(255,255,255,0.03); }
+
+  /* Flow Diagram */
+  .flow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin: 24px 0;
+  }
+
+  .flow-node {
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1rem;
+    text-align: center;
+    min-width: 120px;
+  }
+
+  .flow-arrow {
+    font-size: 1.5rem;
+    color: var(--text-dim);
+  }
+
+  /* Layer Box (for ecosystem overview) */
+  .layer-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    margin: 20px auto;
+    width: 100%;
+    max-width: 700px;
+  }
+
+  .layer {
+    width: 100%;
+    padding: 14px 24px;
+    border-radius: 10px;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.05rem;
+    transition: transform 0.2s;
+  }
+
+  .layer:hover { transform: scale(1.02); }
+
+  .layer .desc {
+    font-weight: 400;
+    font-size: 0.85rem;
+    opacity: 0.8;
+    margin-top: 4px;
+  }
+
+  .layer-ai { background: rgba(79,195,247,0.15); border: 1px solid var(--accent-blue); color: var(--accent-blue); }
+  .layer-llm { background: rgba(206,147,216,0.15); border: 1px solid var(--accent-purple); color: var(--accent-purple); }
+  .layer-api { background: rgba(129,199,132,0.15); border: 1px solid var(--accent-green); color: var(--accent-green); }
+  .layer-providers { background: rgba(255,183,77,0.15); border: 1px solid var(--accent-orange); color: var(--accent-orange); }
+  .layer-agents { background: rgba(128,203,196,0.15); border: 1px solid var(--accent-teal); color: var(--accent-teal); }
+  .layer-mcp { background: rgba(244,143,177,0.15); border: 1px solid var(--accent-pink); color: var(--accent-pink); }
+
+  .layer-arrow {
+    color: var(--text-dim);
+    font-size: 1.2rem;
+  }
+
+  /* Two Column Layout */
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 30px;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 900px;
+  }
+
+  .col {
+    background: var(--slide-bg);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 24px;
+  }
+
+  .col h3 {
+    font-size: 1.2rem;
+    margin-bottom: 12px;
+  }
+
+  .col ul li {
+    font-size: 0.95rem;
+    padding: 6px 0 6px 24px;
+  }
+
+  /* Navigation */
+  .nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 30px;
+    background: rgba(15,15,26,0.9);
+    backdrop-filter: blur(10px);
+    border-top: 1px solid var(--border);
+    z-index: 100;
+  }
+
+  .nav button {
+    background: var(--slide-bg);
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 10px 24px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+  }
+
+  .nav button:hover {
+    background: var(--accent-blue);
+    color: var(--bg);
+    border-color: var(--accent-blue);
+  }
+
+  .nav button:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+
+  .nav button:disabled:hover {
+    background: var(--slide-bg);
+    color: var(--text);
+    border-color: var(--border);
+  }
+
+  .slide-counter {
+    font-size: 0.9rem;
+    color: var(--text-dim);
+  }
+
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple));
+    transition: width 0.3s ease;
+    z-index: 100;
+  }
+
+  /* Keyboard hint */
+  .key-hint {
+    position: fixed;
+    top: 16px;
+    right: 20px;
+    font-size: 0.8rem;
+    color: var(--text-dim);
+    z-index: 100;
+    opacity: 0.6;
+  }
+
+  kbd {
+    background: var(--slide-bg);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 2px 8px;
+    font-family: inherit;
+    font-size: 0.8rem;
+  }
+
+  /* Highlight text */
+  .highlight { color: var(--accent-blue); font-weight: 600; }
+  .highlight-purple { color: var(--accent-purple); font-weight: 600; }
+  .highlight-green { color: var(--accent-green); font-weight: 600; }
+  .highlight-orange { color: var(--accent-orange); font-weight: 600; }
+  .highlight-pink { color: var(--accent-pink); font-weight: 600; }
+
+  /* Speaker Notes Panel */
+  .notes-panel {
+    position: fixed;
+    bottom: 70px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 800px;
+    max-height: 250px;
+    background: var(--slide-bg);
+    border: 1px solid var(--accent-orange);
+    border-radius: 12px;
+    padding: 20px;
+    display: none;
+    z-index: 200;
+    overflow-y: auto;
+    box-shadow: 0 -5px 25px rgba(0,0,0,0.7);
+  }
+
+  .notes-panel.visible {
+    display: block;
+  }
+
+  .notes-panel-title {
+    color: var(--accent-orange);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    font-weight: bold;
+  }
+
+  /* Responsive Adjustments */
+  @media (max-width: 768px) {
+    .slide { 
+      padding: 40px 20px; 
+      overflow-y: auto; 
+      overflow-x: hidden; 
+      justify-content: flex-start; 
+    }
+    .slide.slide-title { justify-content: center; }
+    .two-col { grid-template-columns: 1fr; }
+    .concept-grid { grid-template-columns: 1fr; }
+    .flow { flex-direction: column; }
+    .flow-arrow { transform: rotate(90deg); }
+
+    .presentation.grid-mode {
+      gap: 5vw;
+      padding: 5vw;
+    }
+    .presentation.grid-mode .slide {
+      transform: scale(0.4);
+      margin-right: -60vw;
+      margin-bottom: -60vh;
+    }
+    .presentation.grid-mode .slide:hover {
+      transform: scale(0.42);
+    }
+  }
+
+  /* Animations */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes listFadeIn {
+    from { opacity: 0; transform: translateX(-20px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+
+  .slide.active .animate-in {
+    animation: fadeInUp 0.5s ease forwards;
+  }
+
+  .slide .content li { opacity: 0; }
+  .slide.active .content li { animation: listFadeIn 0.5s ease forwards; }
+
+  /* Staggering list items */
+  .slide.active .content li:nth-child(1) { animation-delay: 0.1s; }
+  .slide.active .content li:nth-child(2) { animation-delay: 0.2s; }
+  .slide.active .content li:nth-child(3) { animation-delay: 0.3s; }
+  .slide.active .content li:nth-child(4) { animation-delay: 0.4s; }
+  .slide.active .content li:nth-child(5) { animation-delay: 0.5s; }
+  .slide.active .content li:nth-child(6) { animation-delay: 0.6s; }
+  .slide.active .content li:nth-child(7) { animation-delay: 0.7s; }
+  .slide.active .content li:nth-child(8) { animation-delay: 0.8s; }
+  .slide.active .content li:nth-child(9) { animation-delay: 0.9s; }
+  .slide.active .content li:nth-child(10) { animation-delay: 1.0s; }
+
+  .slide.active .delay-1 { animation-delay: 0.1s; opacity: 0; }
+  .slide.active .delay-2 { animation-delay: 0.2s; opacity: 0; }
+  .slide.active .delay-3 { animation-delay: 0.3s; opacity: 0; }
+  .slide.active .delay-4 { animation-delay: 0.4s; opacity: 0; }
+  .slide.active .delay-5 { animation-delay: 0.5s; opacity: 0; }
+  .slide.active .delay-6 { animation-delay: 0.6s; opacity: 0; }
+</style>
+</head>
+<body>
+
+<div class="progress-bar" id="progressBar"></div>
+<div class="key-hint"><kbd>←</kbd> <kbd>→</kbd> <kbd>Space</kbd> nav | <kbd>Esc</kbd> grid | <kbd>N</kbd> notes</div>
+
+<div class="presentation" id="presentation">
+
+  <!-- SLIDE 1: Title -->
+  <div class="slide slide-title active" data-slide="1">
+    <div class="notes" style="display:none">
+      Welcome to the AI Ecosystem presentation. Today we will demystify AI, LLMs, Agents, and the tools that connect them all together.
+    </div>
+    <h1 class="animate-in delay-1">AI-Powered Development</h1>
+    <p class="subtitle animate-in delay-2">From LLMs to Agents — How Everything Connects</p>
+    <div class="topics animate-in delay-3">
+      <span class="topic-tag" style="border-color: var(--accent-blue); color: var(--accent-blue);">AI</span>
+      <span class="topic-tag" style="border-color: var(--accent-purple); color: var(--accent-purple);">LLM</span>
+      <span class="topic-tag" style="border-color: var(--accent-green); color: var(--accent-green);">API</span>
+      <span class="topic-tag" style="border-color: var(--accent-orange); color: var(--accent-orange);">Providers</span>
+      <span class="topic-tag" style="border-color: var(--accent-teal); color: var(--accent-teal);">Agents</span>
+      <span class="topic-tag" style="border-color: var(--accent-pink); color: var(--accent-pink);">MCP</span>
+    </div>
+  </div>
+
+  <!-- SLIDE 2: The Big Picture -->
+  <div class="slide" data-slide="2">
+    <div class="notes" style="display:none">
+      This diagram shows how everything builds on top of each other. Start at the bottom with AI and move up layer by layer to MCP. It's a full stack of concepts.
+    </div>
+    <p class="section-label animate-in delay-1">Overview</p>
+    <h2 class="animate-in delay-2">The Big Picture</h2>
+    <div class="content animate-in delay-3">
+      <p style="text-align: center; color: var(--text-dim); margin-bottom: 20px;">These concepts form a stack. Each layer builds on the one below it.</p>
+      <div class="layer-stack">
+        <div class="layer layer-ai">
+          🧠 AI (Artificial Intelligence)
+          <div class="desc">The broad field — machines that simulate intelligence</div>
+        </div>
+        <div class="layer-arrow">▼</div>
+        <div class="layer layer-llm">
+          📖 LLM (Large Language Model)
+          <div class="desc">A type of AI — text prediction engines trained on massive data</div>
+        </div>
+        <div class="layer-arrow">▼</div>
+        <div class="layer layer-api">
+          🔌 API (Application Programming Interface)
+          <div class="desc">How you talk to an LLM programmatically</div>
+        </div>
+        <div class="layer-arrow">▼</div>
+        <div class="layer layer-providers">
+          🏢 API Providers
+          <div class="desc">OpenRouter, Kilo Code, OpenAI</div>
+        </div>
+        <div class="layer-arrow">▼</div>
+        <div class="layer layer-agents">
+          🤖 AI Agents
+          <div class="desc">Roo Code, Cline, Claude Code</div>
+        </div>
+        <div class="layer-arrow">▼</div>
+        <div class="layer layer-mcp">
+          🔗 MCP (Model Context Protocol)
+          <div class="desc">Standard way for agents to connect to tools & data</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: AI -->
+  <div class="slide" data-slide="3">
+    <div class="notes" style="display:none">
+      Emphasize here that AI is the broad category. Use real-world examples like self-driving cars and spam filters to contrast with text-based LLMs.
+    </div>
+    <p class="section-label animate-in delay-1">Layer 1</p>
+    <h2 class="animate-in delay-2"><span class="emoji">🧠</span>AI — Artificial Intelligence</h2>
+    <div class="content animate-in delay-3">
+      <p>AI is the <span class="highlight">broadest term</span> here. It means any system that mimics or simulates human intelligence.</p>
+      <ul>
+        <li>Recognizing images (computer vision)</li>
+        <li>Playing chess or Go (game AI)</li>
+        <li>Recommending videos (recommendation engines)</li>
+        <li>Understanding and generating language (LLMs)</li>
+      </ul>
+      <div class="analogy">
+        <div class="label">Analogy</div>
+        Think of AI like <strong>"Vehicles."</strong> It's the category. Cars, trucks, motorcycles — they're all vehicles, but they work differently. LLMs are one type of AI vehicle.
+      </div>
+      <p style="color: var(--text-dim); font-size: 0.95rem; margin-top: 12px;">Not all AI is LLMs. Spam filters and self-driving cars are AI too.</p>
+    </div>
+  </div>
+
+  <!-- SLIDE 4: LLM -->
+  <div class="slide" data-slide="4">
+    <p class="section-label animate-in delay-1">Layer 2</p>
+    <h2 class="animate-in delay-2"><span class="emoji">📖</span>LLM — Large Language Model</h2>
+    <div class="content animate-in delay-3">
+      <p>An LLM is a specific type of AI — one trained to <span class="highlight-purple">predict the next word</span> in a sequence. Train it on enough data, and it starts to <em>seem</em> like it understands.</p>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h3>Tokens</h3>
+          <p>The smallest unit of text an LLM processes. Not exactly words — can be a word, part of a word, or punctuation.</p>
+          <p style="margin-top: 8px; color: var(--accent-orange);"><strong>1000 tokens ≈ 750 words</strong></p>
+        </div>
+        <div class="concept-card">
+          <h3>Context Window</h3>
+          <p>The maximum text the LLM can "hold in memory" at once — your prompt + its response combined.</p>
+          <p style="margin-top: 8px; color: var(--accent-orange);"><strong>Like working memory</strong></p>
+        </div>
+        <div class="concept-card">
+          <h3>Temperature</h3>
+          <p>Controls randomness. Low (0.1) = predictable. High (0.9) = creative.</p>
+          <p style="margin-top: 8px; color: var(--accent-orange);"><strong>Textbook vs. Creative dial</strong></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 5: Common Models -->
+  <div class="slide" data-slide="5">
+    <p class="section-label animate-in delay-1">Layer 2 — Details</p>
+    <h2 class="animate-in delay-2"><span class="emoji">📖</span>Common LLMs</h2>
+    <div class="content animate-in delay-3">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Model</th>
+              <th>Made By</th>
+              <th>Strengths</th>
+              <th>Context Window</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="highlight">GPT-4 / GPT-5</span></td>
+              <td>OpenAI</td>
+              <td>General purpose, strong reasoning</td>
+              <td>8K – 128K</td>
+            </tr>
+            <tr>
+              <td><span class="highlight-purple">Claude 4 / Sonnet</span></td>
+              <td>Anthropic</td>
+              <td>Long context, code, safety</td>
+              <td>~200K</td>
+            </tr>
+            <tr>
+              <td><span class="highlight-green">Gemini 2.5</span></td>
+              <td>Google</td>
+              <td>Multimodal, generous free tier</td>
+              <td>~1M</td>
+            </tr>
+            <tr>
+              <td><span class="highlight-orange">Llama 3 / 4</span></td>
+              <td>Meta</td>
+              <td>Open source, self-hostable</td>
+              <td>8K – 128K</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="analogy">
+        <div class="label">Key Point</div>
+        You don't need to run these models yourself. <strong>API Providers</strong> host them on their servers. You just send requests.
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 6: API -->
+  <div class="slide" data-slide="6">
+    <p class="section-label animate-in delay-1">Layer 3</p>
+    <h2 class="animate-in delay-2"><span class="emoji">🔌</span>API — Application Programming Interface</h2>
+    <div class="content animate-in delay-3">
+      <p>An API is how <span class="highlight-green">programs talk to each other</span>. Instead of you typing into a chat window, your <em>code</em> sends a message to the LLM and gets a response back.</p>
+      <div class="code-block">
+<span class="comment">// Your code sends a request to the LLM</span>
+<span class="key">POST</span> <span class="url">https://api.openai.com/v1/chat/completions</span>
+
+<span class="key">Body:</span>
+{
+  <span class="key">"model"</span>: <span class="string">"gpt-4"</span>,
+  <span class="key">"messages"</span>: [
+    { <span class="key">"role"</span>: <span class="string">"user"</span>, <span class="key">"content"</span>: <span class="string">"Hello!"</span> }
+  ]
+}
+
+<span class="comment">// Response comes back</span>
+{
+  <span class="key">"choices"</span>: [{
+    <span class="key">"message"</span>: { <span class="key">"content"</span>: <span class="string">"Hi there!"</span> }
+  }]
+}
+      </div>
+      <div class="analogy">
+        <div class="label">Analogy</div>
+        An API is like a <strong>phone call</strong>. You dial a number (the endpoint), say something (the request), and get a reply (the response). The LLM is on the other end of the line.
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 7: API Providers -->
+  <div class="slide" data-slide="7">
+    <p class="section-label animate-in delay-1">Layer 4a</p>
+    <h2 class="animate-in delay-2"><span class="emoji">🏢</span>API Providers</h2>
+    <div class="content animate-in delay-3">
+      <p>These are the companies that <span class="highlight-orange">host the LLMs</span> and let you access them via API. You don't run the model — they do.</p>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Provider</th>
+              <th>What They Offer</th>
+              <th>Free Tier?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="highlight-orange">OpenRouter</span></td>
+              <td>One API, many models (GPT, Claude, open-source)</td>
+              <td>Yes — several free models</td>
+            </tr>
+            <tr>
+              <td><span class="highlight-orange">Kilo Code</span></td>
+              <td>Developer-focused AI API</td>
+              <td>Free tier available</td>
+            </tr>
+            <tr>
+              <td><span class="highlight-orange">OpenAI</span></td>
+              <td>GPT models</td>
+              <td>Limited credits for new accounts</td>
+            </tr>
+            <tr>
+              <td><span class="highlight-orange">Google</span></td>
+              <td>Gemini models</td>
+              <td>Generous free tier</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="color: var(--accent-orange); margin-top: 12px;"><strong>Recommendation:</strong> Start with OpenRouter. One key, many models, free options available.</p>
+    </div>
+  </div>
+
+  <!-- SLIDE 8: Unlocking Frontier Models -->
+  <div class="slide" data-slide="8">
+    <div class="notes" style="display:none">
+      This is where we introduce the Google Cloud Platform (GCP) free tier. Focus on the 90 days aspect and how it removes the barrier to entry for trying top-tier models.
+    </div>
+    <p class="section-label animate-in delay-1">Layer 4a — Cloud Credits</p>
+    <h2 class="animate-in delay-2"><span class="emoji">🎁</span>Unlocking Frontier Models</h2>
+    <div class="content animate-in delay-3">
+      <p>Google Cloud Platform (GCP) offers a <span class="highlight-green">$300 free tier</span> that lasts for 90 days. This allows new users to access top-tier API models for free.</p>
+      <div class="analogy">
+        <div class="label">Analogy</div>
+        Think of it like a <strong>trial gift card</strong>. You get a loaded balance to experiment with the absolute best models on the market before you have to pay a single cent.
+      </div>
+      <ul>
+        <li>No immediate billing on sign-up</li>
+        <li>Access to world-class APIs</li>
+        <li>90 days to prototype and test</li>
+        <li>Risk-free environment for learning</li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- SLIDE 9: Vertex AI & Model Garden -->
+  <div class="slide" data-slide="9">
+    <div class="notes" style="display:none">
+      Explain Vertex AI and its Model Garden. Point out that GCP isn't just for Google's models—they can use their credits on Claude 3.5 Sonnet and Llama 3!
+    </div>
+    <p class="section-label animate-in delay-1">Layer 4a — Enterprise APIs</p>
+    <h2 class="animate-in delay-2"><span class="emoji">🪴</span>Vertex AI & Model Garden</h2>
+    <div class="content animate-in delay-3">
+      <p>Google's <span class="highlight-blue">Vertex AI</span> platform includes the "Model Garden" — a place where developers can access non-Google models using GCP credits.</p>
+      <ul>
+        <li>Run <span class="highlight-purple">Anthropic Claude 3.5 Sonnet</span> via Google's infrastructure</li>
+        <li>Access <span class="highlight-orange">Meta Llama 3</span> models</li>
+        <li>Use your $300 GCP free tier credits on these competitor models!</li>
+      </ul>
+      <div class="concept-grid" style="margin-top: 24px;">
+        <div class="concept-card">
+          <h3>🏢 Enterprise Security</h3>
+          <p>Vertex AI is designed for enterprises. Your data is not used to train their base models. It offers strict compliance, VPC networking, and SLA guarantees.</p>
+        </div>
+        <div class="concept-card">
+          <h3>🔑 Consumer Keys</h3>
+          <p>Standard API keys (like regular OpenAI or Anthropic keys) are simpler to set up but may have different data retention policies and lower rate limits.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 10: AI Agents -->
+  <div class="slide" data-slide="10">
+    <p class="section-label animate-in delay-1">Layer 4b</p>
+    <h2 class="animate-in delay-2"><span class="emoji">🤖</span>AI Agents</h2>
+    <div class="content animate-in delay-3">
+      <p>An agent is AI that doesn't just answer questions — it <span class="highlight-teal">does things</span>. It can plan, use tools, and iterate until the job is done.</p>
+      <div class="analogy">
+        <div class="label">Analogy</div>
+        <strong>Chatbot</strong> = asking someone for directions.<br>
+        <strong>Agent</strong> = asking someone to go deliver a package.
+      </div>
+      <div class="flow">
+        <div class="flow-node" style="background: rgba(128,203,196,0.2); border: 1px solid var(--accent-teal); color: var(--accent-teal);">You give a task</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node" style="background: rgba(128,203,196,0.2); border: 1px solid var(--accent-teal); color: var(--accent-teal);">Agent plans steps</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node" style="background: rgba(128,203,196,0.2); border: 1px solid var(--accent-teal); color: var(--accent-teal);">Uses tools</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node" style="background: rgba(128,203,196,0.2); border: 1px solid var(--accent-teal); color: var(--accent-teal);">Checks work</div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node" style="background: rgba(128,203,196,0.2); border: 1px solid var(--accent-teal); color: var(--accent-teal);">Delivers result</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 11: Agent Skills -->
+  <div class="slide" data-slide="11">
+    <p class="section-label animate-in delay-1">Layer 4b — Skills</p>
+    <h2 class="animate-in delay-2"><span class="emoji">🎓</span>Agent Skills</h2>
+    <div class="content animate-in delay-3">
+      <p>Skills are <span class="highlight-pink">pre-built instruction sets</span> that teach an agent how to behave in specific scenarios. They define the agent's personality, workflow style, and rules of engagement.</p>
+      <div class="analogy">
+        <div class="label">Analogy</div>
+        If <strong>tools</strong> are what an agent can <em>touch</em>, skills are what an agent <em>knows</em>. Like the difference between having a wrench (tool) and knowing plumbing (skill).
+      </div>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h3>📋 Custom Instructions</h3>
+          <p>Define how the agent should respond — tone, format, level of detail, coding style preferences.</p>
+        </div>
+        <div class="concept-card">
+          <h3>🎯 Task-Specific Skills</h3>
+          <p>"Always write tests first", "Explain before coding", "Ask before deleting files" — behavioral rules.</p>
+        </div>
+        <div class="concept-card">
+          <h3>📁 .clinerules / AGENTS.md</h3>
+          <p>Project-specific skill files that live in your repo. The agent reads them automatically on every session.</p>
+        </div>
+        <div class="concept-card">
+          <h3>🔄 Skill Modes</h3>
+          <p>Switch between "architect mode" (plan first) and "builder mode" (code immediately) depending on the task.</p>
+        </div>
+      </div>
+      <div class="code-block" style="font-size: 0.8rem; padding: 14px;">
+<span class="comment"># Example: .clinerules file</span>
+<span class="key">Always explain your reasoning before writing code.</span>
+<span class="key">Write tests before implementation (TDD).</span>
+<span class="key">Never remove existing functionality without asking.</span>
+<span class="key">Use TypeScript for all new files.</span>
+<span class="key">Keep functions under 50 lines.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 12: AI Coding Tools -->
+  <div class="slide" data-slide="12">
+    <p class="section-label animate-in delay-1">Layer 4b — Tools</p>
+    <h2 class="animate-in delay-2"><span class="emoji">🤖</span>AI Coding Tools</h2>
+    <div class="content animate-in delay-3">
+      <div class="two-col">
+        <div class="col">
+          <h3 style="color: var(--accent-teal);">VS Code Extensions</h3>
+          <ul>
+            <li><span class="highlight-teal">Roo Code</span> — Code generation, file editing, terminal commands</li>
+            <li><span class="highlight-teal">Cline</span> — Autonomous coding, browser use, MCP support</li>
+          </ul>
+          <p style="color: var(--text-dim); font-size: 0.9rem; margin-top: 12px;">Best for: Day-to-day coding. They live in your editor, see your code, and make edits directly.</p>
+        </div>
+        <div class="col">
+          <h3 style="color: var(--accent-blue);">CLI Tools</h3>
+          <ul>
+            <li><span class="highlight">Claude Code</span> — Deep codebase understanding</li>
+            <li><span class="highlight">OpenCode</span> — Open-source AI coding assistant</li>
+            <li><span class="highlight">Gemini CLI</span> — Google's CLI for Gemini models</li>
+            <li><span class="highlight">OpenClaw</span> — Open-source CLI AI tool</li>
+          </ul>
+          <p style="color: var(--text-dim); font-size: 0.9rem; margin-top: 12px;">Best for: Terminal workflows, scripting, server environments. No GUI needed.</p>
+        </div>
+      </div>
+      <div style="margin-top: 16px;">
+        <p style="text-align: center;"><span class="highlight-orange">Open Manus</span> — Python framework to build custom AI agents for workflows</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 13: Git -->
+  <div class="slide" data-slide="13">
+    <p class="section-label animate-in delay-1">Essential Tool</p>
+    <h2 class="animate-in delay-2"><span class="emoji">📦</span>Git — Version Control</h2>
+    <div class="content animate-in delay-3">
+      <p>Git is the <span class="highlight-orange">foundation of modern software development</span>. It tracks every change to your code, lets you experiment safely, and enables collaboration.</p>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h3>🕐 Time Machine</h3>
+          <p>Every saved state is recoverable. Made a mistake? Go back to any previous version instantly.</p>
+        </div>
+        <div class="concept-card">
+          <h3>🧪 Safe Experimentation</h3>
+          <p>Branches let you try new ideas without breaking working code. Merge when ready, discard if not.</p>
+        </div>
+        <div class="concept-card">
+          <h3>👥 Collaboration</h3>
+          <p>Multiple people work on the same project simultaneously. Git merges changes and flags conflicts.</p>
+        </div>
+        <div class="concept-card">
+          <h3>🤖 AI Agent Safety Net</h3>
+          <p>When AI agents edit your code, Git lets you review, accept, or revert every change.</p>
+        </div>
+      </div>
+      <div class="analogy">
+        <div class="label">Analogy</div>
+        Git is like <strong>Ctrl+Z on steroids</strong>. Instead of just undoing your last action, it saves <em>every version</em> of your project forever.
+      </div>
+      <div class="code-block" style="font-size: 0.8rem; padding: 14px;">
+<span class="comment"># The commands you'll use 90% of the time</span>
+<span class="key">git init</span>            <span class="comment"># Start tracking a project</span>
+<span class="key">git add .</span>           <span class="comment"># Stage all changes</span>
+<span class="key">git commit -m "msg"</span> <span class="comment"># Save a checkpoint</span>
+<span class="key">git branch feat</span>     <span class="comment"># Create a parallel workspace</span>
+<span class="key">git push</span>            <span class="comment"># Upload to GitHub/GitLab</span>
+<span class="key">git log --oneline</span>   <span class="comment"># See history</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 14: MCP -->
+  <div class="slide" data-slide="14">
+    <p class="section-label animate-in delay-1">Layer 5</p>
+    <h2 class="animate-in delay-2"><span class="emoji">🔗</span>MCP — Model Context Protocol</h2>
+    <div class="content animate-in delay-3">
+      <p>MCP is a <span class="highlight-pink">standard protocol</span> that lets AI agents connect to external tools and data sources — file systems, databases, web browsers, and more.</p>
+      <div class="analogy">
+        <div class="label">Analogy</div>
+        <strong>Before MCP:</strong> Every phone had its own charger. Every tool needed custom code.<br>
+        <strong>After MCP:</strong> USB-C. One standard port. Plug in anything — the agent knows how to talk to it.
+      </div>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h3>📁 File Systems</h3>
+          <p>Read, write, search files on your machine</p>
+        </div>
+        <div class="concept-card">
+          <h3>🗄️ Databases</h3>
+          <p>Query data from SQL, NoSQL, etc.</p>
+        </div>
+        <div class="concept-card">
+          <h3>🌐 Web Browsers</h3>
+          <p>Scrape pages, automate web tasks</p>
+        </div>
+        <div class="concept-card">
+          <h3>📦 Git Repos</h3>
+          <p>Commit, branch, review, and push code</p>
+        </div>
+      </div>
+      <p style="margin-top: 20px; text-align: center;">
+        <span class="highlight-pink">💡 30 MCP Ideas with Source Code →</span>
+        <a href="https://dev.to/copilotkit/30-mcp-ideas-with-complete-source-code-d8e" target="_blank" style="color: var(--accent-blue); text-decoration: underline;">dev.to/copilotkit/30-mcp-ideas</a>
+      </p>
+    </div>
+  </div>
+
+  <!-- SLIDE 15: Full Flow -->
+  <div class="slide" data-slide="15">
+    <p class="section-label animate-in delay-1">Putting It Together</p>
+    <h2 class="animate-in delay-2">The Complete Flow</h2>
+    <div class="content animate-in delay-3">
+      <div class="flow" style="flex-direction: column; gap: 4px;">
+        <div class="flow-node" style="background: rgba(255,255,255,0.05); border: 1px solid var(--text-dim); color: var(--text); min-width: 200px;">👤 You (the developer)</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-node" style="background: rgba(128,203,196,0.2); border: 1px solid var(--accent-teal); color: var(--accent-teal); min-width: 300px;">🤖 AI Agent (Roo Code, Cline, Claude Code)</div>
+        <div class="flow-arrow">↓ uses MCP to access tools</div>
+        <div class="flow-node" style="background: rgba(129,199,132,0.2); border: 1px solid var(--accent-green); color: var(--accent-green); min-width: 250px;">🔌 API Call (to OpenRouter, OpenAI, etc.)</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-node" style="background: rgba(206,147,216,0.2); border: 1px solid var(--accent-purple); color: var(--accent-purple); min-width: 300px;">📖 LLM (GPT-4, Claude, Gemini, Llama)</div>
+        <div class="flow-arrow">↓ processes request</div>
+        <div class="flow-node" style="background: rgba(79,195,247,0.2); border: 1px solid var(--accent-blue); color: var(--accent-blue); min-width: 200px;">✨ Response flows back</div>
+      </div>
+      <div class="analogy" style="margin-top: 24px;">
+        <div class="label">The One-Liner</div>
+        You use an <strong>Agent</strong> → which calls an <strong>API</strong> → which hits an <strong>LLM</strong> → which is a type of <strong>AI</strong>. <strong>MCP</strong> is how the Agent talks to your tools. <strong>Providers</strong> are who hosts the LLM.
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 16: Example Agent Workflow -->
+  <div class="slide" data-slide="16">
+    <p class="section-label animate-in delay-1">In Practice</p>
+    <h2 class="animate-in delay-2"><span class="emoji">⚡</span>Example Agent Workflow</h2>
+    <div class="content animate-in delay-3">
+      <p style="text-align: center; color: var(--text-dim); margin-bottom: 16px;">Building a REST API endpoint with an AI agent — from task to deployment.</p>
+      <div class="flow" style="flex-direction: column; gap: 4px;">
+        <div class="flow-node" style="background: rgba(255,255,255,0.05); border: 1px solid var(--text-dim); color: var(--text); min-width: 200px;">1. You describe the task</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-node" style="background: rgba(244,143,177,0.2); border: 1px solid var(--accent-pink); color: var(--accent-pink); min-width: 300px;">2. Agent loads <strong>Skills</strong> (.clinerules, AGENTS.md) + reads codebase via <strong>MCP</strong></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-node" style="background: rgba(128,203,196,0.2); border: 1px solid var(--accent-teal); color: var(--accent-teal); min-width: 300px;">3. Creates branch (git <strong>Tool</strong>), writes code + tests (LLM via API)</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-node" style="background: rgba(128,203,196,0.2); border: 1px solid var(--accent-teal); color: var(--accent-teal); min-width: 300px;">4. Runs tests (terminal <strong>Tool</strong>), fixes errors iteratively — guided by <strong>Skills</strong></div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-node" style="background: rgba(244,143,177,0.2); border: 1px solid var(--accent-pink); color: var(--accent-pink); min-width: 300px;">5. Commits, pushes, opens PR via <strong>MCP</strong> (git repo connector)</div>
+        <div class="flow-arrow">↓</div>
+        <div class="flow-node" style="background: rgba(255,255,255,0.05); border: 1px solid var(--text-dim); color: var(--text); min-width: 200px;">6. You review, approve, merge</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 17: Pros and Cons -->
+  <div class="slide" data-slide="17">
+    <p class="section-label animate-in delay-1">Reality Check</p>
+    <h2 class="animate-in delay-2"><span class="emoji">⚖️</span>Pros & Cons of AI-Driven Development</h2>
+    <div class="content animate-in delay-3">
+      <div class="two-col">
+        <div class="col" style="border-color: var(--accent-green);">
+          <h3 style="color: var(--accent-green);">Pros</h3>
+          <ul>
+            <li>10x faster boilerplate generation</li>
+            <li>Agents handle repetitive tasks</li>
+            <li>Instant test writing & debugging</li>
+            <li>Context-aware code suggestions</li>
+            <li>Works while you focus on architecture</li>
+          </ul>
+        </div>
+        <div class="col" style="border-color: var(--accent-orange);">
+          <h3 style="color: var(--accent-orange);">Cons</h3>
+          <ul>
+            <li>Can introduce subtle bugs</li>
+            <li>Overconfident in wrong answers</li>
+            <li>Token costs add up on large codebases</li>
+            <li>Requires human review — never trust blindly</li>
+            <li>Context window limits on huge projects</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 18: Sub-Agent Driven Development -->
+  <div class="slide" data-slide="18">
+    <p class="section-label animate-in delay-1">Advanced Patterns</p>
+    <h2 class="animate-in delay-2"><span class="emoji">🔀</span>Sub-Agent Driven Development</h2>
+    <div class="content animate-in delay-3">
+      <p>Instead of one agent doing everything, a <span class="highlight-purple">main agent delegates tasks to specialized sub-agents</span> that work in parallel — each in an isolated workspace.</p>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h3>🤖 Main Agent (Orchestrator)</h3>
+          <p>Receives your high-level task, breaks it down, dispatches sub-agents, and merges results.</p>
+        </div>
+        <div class="concept-card">
+          <h3>⚡ Parallel Execution</h3>
+          <p>Sub-agents run simultaneously on independent tasks. Frontend, backend, tests — all at once.</p>
+        </div>
+        <div class="concept-card">
+          <h3>🌳 Git Worktrees</h3>
+          <p>Each sub-agent gets its own isolated branch + working directory. No conflicts, no overwrites.</p>
+        </div>
+        <div class="concept-card">
+          <h3>🔒 Isolation & Safety</h3>
+          <p>If a sub-agent breaks something, only its worktree is affected. Main branch stays clean.</p>
+        </div>
+      </div>
+      <div class="code-block" style="font-size: 0.8rem; padding: 14px;">
+<span class="comment"># Git worktrees — each sub-agent gets its own</span>
+<span class="key">git worktree add ../feat-auth origin/feat-auth</span>    <span class="comment"># Auth agent</span>
+<span class="key">git worktree add ../feat-api origin/feat-api</span>    <span class="comment"># API agent</span>
+<span class="key">git worktree add ../feat-tests origin/feat-tests</span>  <span class="comment"># Test agent</span>
+
+<span class="comment"># Each agent works independently in parallel</span>
+<span class="comment"># When done: review, merge, clean up</span>
+<span class="key">git worktree remove ../feat-auth</span>
+      </div>
+      <div class="analogy">
+        <div class="label">Analogy</div>
+        <strong>Single agent</strong> = one contractor doing plumbing, electrical, and painting sequentially.<br>
+        <strong>Sub-agents + worktrees</strong> = a team of specialists working in parallel, each in their own room.
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 19: Best Practices for Agents & Chat -->
+  <div class="slide" data-slide="19">
+    <p class="section-label animate-in delay-1">Best Practices</p>
+    <h2 class="animate-in delay-2"><span class="emoji">🛡️</span>Best Practices for Using Agents & Chat</h2>
+    <div class="content animate-in delay-3">
+      <p>AI agents are powerful but need <span class="highlight-orange">guardrails</span>. These habits separate productive users from those who get burned.</p>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h3>🎯 Be Specific</h3>
+          <p>"Add a POST /users endpoint with validation" beats "make a user API." Clear prompts = clear results.</p>
+        </div>
+        <div class="concept-card">
+          <h3>🔍 Always Review Changes</h3>
+          <p>Never blindly accept agent output. Read diffs, run tests, understand what changed before committing.</p>
+        </div>
+        <div class="concept-card">
+          <h3>📦 Small Tasks, Not Monoliths</h3>
+          <p>Break big requests into steps. "Add auth" → "Create user model" → "Add login route" → "Add middleware."</p>
+        </div>
+        <div class="concept-card">
+          <h3>🔒 Protect Secrets</h3>
+          <p>Never paste API keys, passwords, or tokens into chat. Use environment variables and .env files.</p>
+        </div>
+      </div>
+      <div class="analogy">
+        <div class="label">Golden Rule</div>
+        Treat an AI agent like a <strong>fast but inexperienced junior developer</strong>. Give clear instructions, review their work, and never let them deploy unsupervised.
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 20: Context Management -->
+  <div class="slide" data-slide="20">
+    <p class="section-label animate-in delay-1">Best Practices — Context</p>
+    <h2 class="animate-in delay-2"><span class="emoji">🧠</span>Context Management</h2>
+    <div class="content animate-in delay-3">
+      <p>Every agent session has a <span class="highlight-purple">context window</span> — a finite "memory" that fills up as you chat. When it's full, the agent starts <strong>forgetting earlier messages</strong>.</p>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h3>⚠️ What Happens When Context Is Full</h3>
+          <p>The agent drops the oldest messages. It loses your original instructions, earlier decisions, and the reasoning behind them. Results get inconsistent or wrong.</p>
+        </div>
+        <div class="concept-card">
+          <h3>✂️ Trim the Conversation</h3>
+          <p>Start a new session for a new task. Don't let one chat grow forever. Summarize what was decided, then reset.</p>
+        </div>
+        <div class="concept-card">
+          <h3>📌 Pin Key Information</h3>
+          <p>Use AGENTS.md, .clinerules, or pinned messages to store critical info. The agent reads these every session — they don't eat chat context.</p>
+        </div>
+        <div class="concept-card">
+          <h3>🗂️ Use Sub-Agents for Big Tasks</h3>
+          <p>Instead of one long conversation, dispatch sub-agents for independent work. Each gets a fresh context window.</p>
+        </div>
+      </div>
+      <div class="analogy">
+        <div class="label">Analogy</div>
+        Context window is like a <strong>whiteboard</strong>. When it's full, you have to erase the oldest stuff to make room. If you erase the wrong thing, the agent forgets what it was doing.
+      </div>
+      <div class="code-block" style="font-size: 0.8rem; padding: 14px;">
+<span class="comment">// Signs your context is overloaded</span>
+<span class="key">→</span> <span class="string">Agent repeats things you already told it</span>
+<span class="key">→</span> <span class="string">It ignores earlier instructions or constraints</span>
+<span class="key">→</span> <span class="string">Responses become generic or off-topic</span>
+<span class="key">→</span> <span class="string">It "forgets" decisions made 20+ messages ago</span>
+
+<span class="comment">// Fix: summarize + reset</span>
+<span class="key">"Here's what we've decided so far: [summary].</span>
+<span class="key"> Start a fresh session with this context."</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 21: Effective Prompt Patterns -->
+  <div class="slide" data-slide="21">
+    <p class="section-label animate-in delay-1">Best Practices — Prompts</p>
+    <h2 class="animate-in delay-2"><span class="emoji">💬</span>Effective Prompt Patterns</h2>
+    <div class="content animate-in delay-3">
+      <div class="two-col">
+        <div class="col" style="border-color: var(--accent-green);">
+          <h3 style="color: var(--accent-green);">Do This</h3>
+          <ul>
+            <li>Provide context: "In this Express app, add..."</li>
+            <li>Specify output format: "Return TypeScript with JSDoc"</li>
+            <li>Set constraints: "Max 30 lines, no external deps"</li>
+            <li>Ask for reasoning: "Explain before you code"</li>
+            <li>Iterate: "Now add error handling"</li>
+          </ul>
+        </div>
+        <div class="col" style="border-color: var(--accent-orange);">
+          <h3 style="color: var(--accent-orange);">Avoid This</h3>
+          <ul>
+            <li>Vague requests: "Fix the app"</li>
+            <li>Assuming correctness without testing</li>
+            <li>Pasting entire codebases in one prompt</li>
+            <li>Letting agents modify production data</li>
+            <li>Skipping git commits before agent sessions</li>
+          </ul>
+        </div>
+      </div>
+      <div class="code-block" style="font-size: 0.8rem; padding: 14px; margin-top: 16px;">
+<span class="comment">// Good prompt structure</span>
+<span class="key">Context:</span> <span class="string">"Express + TypeScript REST API"</span>
+<span class="key">Task:</span> <span class="string">"Add POST /api/users with email validation"</span>
+<span class="key">Constraints:</span> <span class="string">"Use Zod for validation, max 40 lines"</span>
+<span class="key">Output:</span> <span class="string">"Route file + one test case"</span>
+<span class="key">Rule:</span> <span class="string">"Explain your approach before coding"</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 22: OpenClaw -->
+  <div class="slide" data-slide="22">
+    <p class="section-label animate-in delay-1">Tool Spotlight</p>
+    <h2 class="animate-in delay-2"><span class="emoji">🦞</span>OpenClaw — Open-Source CLI AI Agent</h2>
+    <div class="content animate-in delay-3">
+      <p>OpenClaw is an <span class="highlight-teal">open-source CLI-based AI agent</span> that brings sub-agent orchestration, tool use, and MCP support to your terminal — no GUI required.</p>
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h3>🖥️ Terminal-First</h3>
+          <p>Lives in your shell. Pipe output, chain commands, script workflows. Perfect for server environments and CI/CD.</p>
+        </div>
+        <div class="concept-card">
+          <h3>🔀 Sub-Agent Orchestration</h3>
+          <p>Spawn independent agents for parallel tasks. Each gets its own context, tools, and workspace.</p>
+        </div>
+        <div class="concept-card">
+          <h3>📱 Telegram Bot Integration</h3>
+          <p>Connect OpenClaw to Telegram — interact with your AI agent from your phone. Send tasks, get results, trigger workflows from anywhere.</p>
+        </div>
+        <div class="concept-card">
+          <h3>🔗 MCP Support</h3>
+          <p>Connect to file systems, databases, browsers, and custom tools through the standard MCP protocol.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 23: OpenClaw Use Cases -->
+  <div class="slide" data-slide="23">
+    <p class="section-label animate-in delay-1">OpenClaw — In Action</p>
+    <h2 class="animate-in delay-2"><span class="emoji">🦞</span>OpenClaw Use Cases</h2>
+    <div class="content animate-in delay-3">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Use Case</th>
+              <th>How It Works</th>
+              <th>Why OpenClaw</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="highlight-teal">Code Review</span></td>
+              <td>Agent reads PR diff, checks for bugs, suggests improvements</td>
+              <td>CLI-native — runs in CI pipelines</td>
+            </tr>
+            <tr>
+              <td><span class="highlight-teal">Migration Scripts</span></td>
+              <td>"Convert all JS files to TypeScript" — agent plans and executes</td>
+              <td>Sub-agents handle files in parallel</td>
+            </tr>
+            <tr>
+              <td><span class="highlight-teal">Data Pipeline</span></td>
+              <td>Scrape → clean → load via MCP-connected database</td>
+              <td>Terminal piping + MCP tools</td>
+            </tr>
+            <tr>
+              <td><span class="highlight-teal">Infrastructure</span></td>
+              <td>Generate Terraform configs from natural language descriptions</td>
+              <td>No GUI needed — SSH into any server</td>
+            </tr>
+            <tr>
+              <td><span class="highlight-teal">Documentation</span></td>
+              <td>Read codebase via MCP, generate API docs, update README</td>
+              <td>Batch process across multiple repos</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="analogy">
+        <div class="label">When to Choose OpenClaw</div>
+        You're comfortable in the terminal, need <strong>automation at scale</strong>, or work in environments without a GUI (servers, containers, CI/CD).
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 24: Quick Reference -->
+  <div class="slide" data-slide="24">
+    <p class="section-label animate-in delay-1">Cheat Sheet</p>
+    <h2 class="animate-in delay-2">Quick Reference Card</h2>
+    <div class="content animate-in delay-3">
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Term</th>
+              <th>One-Line Definition</th>
+              <th>Analogy</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="highlight">AI</span></td>
+              <td>Machines that simulate intelligence</td>
+              <td>"Vehicles" (the category)</td>
+            </tr>
+            <tr>
+              <td><span class="highlight-purple">LLM</span></td>
+              <td>Text prediction engine trained on massive data</td>
+              <td>"Engine" (one type of vehicle)</td>
+            </tr>
+            <tr>
+              <td><span class="highlight-purple">Token</span></td>
+              <td>Unit of text the LLM processes</td>
+              <td>"Words" (roughly)</td>
+            </tr>
+            <tr>
+              <td><span class="highlight-purple">Context Window</span></td>
+              <td>How much text the LLM can process at once</td>
+              <td>"Working memory"</td>
+            </tr>
+            <tr>
+              <td><span class="highlight-green">API</span></td>
+              <td>Program-to-program communication</td>
+              <td>"Phone call"</td>
+            </tr>
+            <tr>
+              <td><span class="highlight-orange">Provider</span></td>
+              <td>Company that hosts the LLM</td>
+              <td>"Phone company"</td>
+            </tr>
+            <tr>
+              <td><span class="highlight-teal">Agent</span></td>
+              <td>AI that can act autonomously with tools</td>
+              <td>"Employee"</td>
+            </tr>
+            <tr>
+              <td><span class="highlight-pink">MCP</span></td>
+              <td>Standard protocol for agent-tool connections</td>
+              <td>"USB-C"</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 25: End -->
+  <div class="slide slide-title" data-slide="25">
+    <h1 class="animate-in delay-1">Questions?</h1>
+    <p class="subtitle animate-in delay-2" style="margin-bottom: 30px;">From AI fundamentals to agents, MCP, and modern dev tools — you now know how it all connects.</p>
+    <div class="topics animate-in delay-3" style="margin-bottom: 30px;">
+      <span class="topic-tag" style="border-color: var(--accent-blue); color: var(--accent-blue);">AI & LLMs</span>
+      <span class="topic-tag" style="border-color: var(--accent-green); color: var(--accent-green);">APIs</span>
+      <span class="topic-tag" style="border-color: var(--accent-orange); color: var(--accent-orange);">Providers</span>
+      <span class="topic-tag" style="border-color: var(--accent-teal); color: var(--accent-teal);">Agents</span>
+      <span class="topic-tag" style="border-color: var(--accent-pink); color: var(--accent-pink);">MCP</span>
+      <span class="topic-tag" style="border-color: var(--accent-purple); color: var(--accent-purple);">Git</span>
+      <span class="topic-tag" style="border-color: var(--accent-teal); color: var(--accent-teal);">Antigravity</span>
+      <span class="topic-tag" style="border-color: var(--accent-blue); color: var(--accent-blue);">OpenCode Desktop</span>
+    </div>
+    <p class="animate-in delay-4" style="font-size: 1.2rem; color: var(--text-dim); margin-top: 10px;">
+      <span style="color: var(--accent-blue);">✉</span> rupan@mgtechsoft.com
+    </p>
+  </div>
+
+</div>
+
+<!-- Notes Panel -->
+<div class="notes-panel" id="notesPanel">
+  <div class="notes-panel-title">Speaker Notes</div>
+  <div id="notesContent">No notes for this slide.</div>
+</div>
+
+<!-- Navigation -->
+<div class="nav">
+  <button id="prevBtn" onclick="changeSlide(-1)" disabled>← Previous</button>
+  <span class="slide-counter" id="slideCounter">1 / 25</span>
+  <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
+</div>
+
+<script>
+  let currentSlide = 1;
+  const totalSlides = 25;
+
+  function changeSlide(direction) {
+    const newSlide = currentSlide + direction;
+    if (newSlide < 1 || newSlide > totalSlides) return;
+
+    const current = document.querySelector(`.slide[data-slide="${currentSlide}"]`);
+    const next = document.querySelector(`.slide[data-slide="${newSlide}"]`);
+
+    if (direction > 0) {
+      current.classList.remove('active');
+      current.classList.add('exit-left');
+      setTimeout(() => current.classList.remove('exit-left'), 500);
+    } else {
+      current.classList.remove('active');
+    }
+
+    next.classList.add('active');
+    currentSlide = newSlide;
+
+    document.getElementById('prevBtn').disabled = currentSlide === 1;
+    document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+    document.getElementById('slideCounter').textContent = `${currentSlide} / ${totalSlides}`;
+    document.getElementById('progressBar').style.width = `${(currentSlide / totalSlides) * 100}%`;
+    
+    updateNotes();
+  }
+
+  // Keyboard navigation & Grid Mode & Notes toggle
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      const pres = document.getElementById('presentation');
+      pres.classList.toggle('grid-mode');
+      if (pres.classList.contains('grid-mode')) {
+        document.body.classList.add('grid-active');
+      } else {
+        document.body.classList.remove('grid-active');
+      }
+    } else if (e.key === 'n' || e.key === 'N') {
+      const panel = document.getElementById('notesPanel');
+      panel.classList.toggle('visible');
+    }
+    
+    // Slide Navigation
+    if (!document.getElementById('presentation').classList.contains('grid-mode')) {
+      if (e.key === 'ArrowRight' || e.key === ' ') {
+        e.preventDefault();
+        changeSlide(1);
+      } else if (e.key === 'ArrowLeft') {
+        e.preventDefault();
+        changeSlide(-1);
+      }
+    }
+  });
+
+  // Swipe Support
+  let touchStartX = 0;
+  let touchEndX = 0;
+  
+  document.addEventListener('touchstart', e => {
+    touchStartX = e.changedTouches[0].screenX;
+  }, {passive: true});
+  
+  document.addEventListener('touchend', e => {
+    touchEndX = e.changedTouches[0].screenX;
+    handleSwipe();
+  }, {passive: true});
+
+  function handleSwipe() {
+    const swipeThreshold = 50;
+    // Only swipe if not in grid mode
+    if (!document.getElementById('presentation').classList.contains('grid-mode')) {
+      if (touchEndX < touchStartX - swipeThreshold) {
+        changeSlide(1); // Swipe Left
+      }
+      if (touchEndX > touchStartX + swipeThreshold) {
+        changeSlide(-1); // Swipe Right
+      }
+    }
+  }
+
+  // Click on slide in Grid Mode to jump to it
+  document.querySelectorAll('.slide').forEach(slide => {
+    slide.addEventListener('click', function() {
+      if (document.getElementById('presentation').classList.contains('grid-mode')) {
+        const targetSlide = parseInt(this.getAttribute('data-slide'));
+        const current = document.querySelector('.slide.active');
+        if (current) current.classList.remove('active');
+        
+        this.classList.add('active');
+        currentSlide = targetSlide;
+        
+        document.getElementById('prevBtn').disabled = currentSlide === 1;
+        document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+        document.getElementById('slideCounter').textContent = `${currentSlide} / ${totalSlides}`;
+        document.getElementById('progressBar').style.width = `${(currentSlide / totalSlides) * 100}%`;
+        
+        // Close grid mode
+        document.getElementById('presentation').classList.remove('grid-mode');
+        document.body.classList.remove('grid-active');
+        
+        updateNotes();
+      }
+    });
+  });
+
+  // Dynamically add Copy Buttons to Code Blocks
+  document.querySelectorAll('.code-block').forEach(block => {
+    const btn = document.createElement('button');
+    btn.className = 'copy-btn';
+    btn.textContent = 'Copy';
+    btn.onclick = (e) => {
+      e.stopPropagation(); // prevent jumping to slide in grid mode
+      const clone = block.cloneNode(true);
+      const copyBtn = clone.querySelector('.copy-btn');
+      if (copyBtn) clone.removeChild(copyBtn);
+      const text = clone.innerText || clone.textContent;
+      navigator.clipboard.writeText(text.trim()).then(() => {
+        btn.textContent = 'Copied!';
+        setTimeout(() => btn.textContent = 'Copy', 2000);
+      });
+    };
+    block.appendChild(btn);
+  });
+
+  // Update Speaker Notes
+  function updateNotes() {
+    const activeSlide = document.querySelector('.slide.active');
+    if (!activeSlide) return;
+    const notesNode = activeSlide.querySelector('.notes');
+    const notesContent = document.getElementById('notesContent');
+    
+    if (notesNode) {
+      notesContent.innerHTML = notesNode.innerHTML;
+    } else {
+      notesContent.innerHTML = "<em>No notes for this slide.</em>";
+    }
+  }
+
+  // Initialize
+  document.getElementById('progressBar').style.width = `${(1 / totalSlides) * 100}%`;
+  document.addEventListener('DOMContentLoaded', () => {
+    updateNotes();
+  });
+</script>
+
+</body>
+</html>
