@@ -1,0 +1,49 @@
+<h2>Modal Layout & Curriculum</h2>
+<p class="subtitle">How should the topics and videos be organized inside the full-screen modal?</p>
+
+<div class="cards">
+  <div class="card" data-choice="grid" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#1a1a2e;height:160px;padding:10px;border-bottom:1px solid #2a2a40;display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+      <div style="background:#2a2a40;border-top:2px solid #4fc3f7;border-radius:4px;padding:8px;">
+        <div style="font-size:10px;color:#4fc3f7;margin-bottom:6px;">1. AI & LLM Basics</div>
+        <div style="height:4px;background:#e8e8f0;margin-bottom:4px;width:80%;"></div>
+        <div style="height:4px;background:#e8e8f0;margin-bottom:4px;width:70%;"></div>
+      </div>
+      <div style="background:#2a2a40;border-top:2px solid #ce93d8;border-radius:4px;padding:8px;">
+        <div style="font-size:10px;color:#ce93d8;margin-bottom:6px;">2. APIs & Providers</div>
+        <div style="height:4px;background:#e8e8f0;margin-bottom:4px;width:90%;"></div>
+      </div>
+      <div style="background:#2a2a40;border-top:2px solid #81c784;border-radius:4px;padding:8px;">
+        <div style="font-size:10px;color:#81c784;margin-bottom:6px;">3. AI Agents & Tools</div>
+        <div style="height:4px;background:#e8e8f0;margin-bottom:4px;width:85%;"></div>
+      </div>
+      <div style="background:#2a2a40;border-top:2px solid #ffb74d;border-radius:4px;padding:8px;">
+        <div style="font-size:10px;color:#ffb74d;margin-bottom:6px;">4. MCP & Advanced</div>
+        <div style="height:4px;background:#e8e8f0;margin-bottom:4px;width:75%;"></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3 style="color:#4fc3f7;">Grid View (All at once)</h3>
+      <p>Displays all topics and their videos simultaneously in a grid layout. Great for giving a bird's-eye view of the entire course curriculum.</p>
+    </div>
+  </div>
+  
+  <div class="card" data-choice="tabs" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#1a1a2e;height:160px;display:flex;border-bottom:1px solid #2a2a40;">
+      <div style="width:35%;background:#0f0f1a;padding:10px;border-right:1px solid #2a2a40;display:flex;flex-direction:column;gap:5px;">
+        <div style="padding:4px;background:#2a2a40;border-left:2px solid #ce93d8;font-size:8px;color:#ce93d8;">1. AI Basics</div>
+        <div style="padding:4px;font-size:8px;color:#8888a0;">2. APIs</div>
+        <div style="padding:4px;font-size:8px;color:#8888a0;">3. Agents</div>
+      </div>
+      <div style="width:65%;padding:10px;display:flex;flex-direction:column;gap:8px;">
+        <div style="font-size:10px;color:#ce93d8;margin-bottom:4px;">Videos for AI Basics</div>
+        <div style="display:flex;align-items:center;gap:5px;"><div style="width:20px;height:15px;background:#4fc3f7;border-radius:2px;"></div><div style="height:4px;background:#e8e8f0;flex:1;"></div></div>
+        <div style="display:flex;align-items:center;gap:5px;"><div style="width:20px;height:15px;background:#4fc3f7;border-radius:2px;"></div><div style="height:4px;background:#e8e8f0;flex:1;"></div></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3 style="color:#ce93d8;">Sidebar / Tabbed View</h3>
+      <p>Left sidebar lists the topics. Clicking a topic reveals its specific videos on the right. Keeps the interface clean if there are many videos.</p>
+    </div>
+  </div>
+</div>

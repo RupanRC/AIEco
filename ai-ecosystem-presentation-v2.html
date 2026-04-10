@@ -544,7 +544,7 @@
     .two-col { grid-template-columns: 1fr; }
     .concept-grid { grid-template-columns: 1fr; }
     .flow { flex-direction: column; }
-    .flow-arrow { transform: rotate(90deg); }
+    .flow:not([style*="column"]) .flow-arrow { transform: rotate(90deg); }
 
     .presentation.grid-mode {
       gap: 5vw;
@@ -619,6 +619,13 @@
       <span class="topic-tag" style="border-color: var(--accent-orange); color: var(--accent-orange);">Providers</span>
       <span class="topic-tag" style="border-color: var(--accent-teal); color: var(--accent-teal);">Agents</span>
       <span class="topic-tag" style="border-color: var(--accent-pink); color: var(--accent-pink);">MCP</span>
+    </div>
+    
+    <!-- Course Playlist Button -->
+    <div class="animate-in delay-4" style="margin-top: 30px;">
+      <a href="ai-ecosystem-playlist.html" target="_blank" style="display:inline-block; padding:12px 24px; background:linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); color:#000; text-decoration:none; font-weight:bold; border-radius:8px; font-size:1.1rem; transition:transform 0.2s;">
+        ▶ Go to YouTube Links/Playlist
+      </a>
     </div>
   </div>
 
@@ -1443,7 +1450,7 @@
     <!-- Course Playlist Button -->
     <div class="animate-in delay-4" style="margin-bottom: 30px;">
       <a href="ai-ecosystem-playlist.html" target="_blank" style="display:inline-block; padding:12px 24px; background:linear-gradient(135deg, var(--accent-blue), var(--accent-purple)); color:#000; text-decoration:none; font-weight:bold; border-radius:8px; font-size:1.1rem; transition:transform 0.2s;">
-        ▶ View Course Playlist
+        ▶ Go to YouTube Links/Playlist
       </a>
     </div>
 

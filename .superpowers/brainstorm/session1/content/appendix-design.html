@@ -1,0 +1,30 @@
+<h2>Appendix Slide Design</h2>
+<p class="subtitle">How should the video links be displayed on the new slide?</p>
+
+<div class="cards">
+  <div class="card" data-choice="grid" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#1a1a2e;height:120px;display:flex;align-items:center;justify-content:center;border-bottom:1px solid #2a2a40;">
+      <div style="display:flex;gap:10px;">
+        <div style="width:60px;height:40px;background:#ce93d8;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#000;">▶ Video 1</div>
+        <div style="width:60px;height:40px;background:#4fc3f7;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#000;">▶ Video 2</div>
+        <div style="width:60px;height:40px;background:#81c784;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:10px;color:#000;">▶ Video 3</div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3 style="color:#ce93d8;">Visual Grid (Recommended)</h3>
+      <p>A CSS Grid of 6-8 stylized video "cards". Visually aligns with the presentation's design. Clicking opens YouTube in a new tab.</p>
+    </div>
+  </div>
+  
+  <div class="card" data-choice="list" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#1a1a2e;height:120px;padding:20px;border-bottom:1px solid #2a2a40;display:flex;flex-direction:column;gap:8px;">
+      <div style="color:#e8e8f0;font-size:12px;">• AI Basics Explained <span style="color:#8888a0">(10:00)</span></div>
+      <div style="color:#e8e8f0;font-size:12px;">• LLMs Under the Hood <span style="color:#8888a0">(15:30)</span></div>
+      <div style="color:#e8e8f0;font-size:12px;">• What is MCP? <span style="color:#8888a0">(8:45)</span></div>
+    </div>
+    <div class="card-body">
+      <h3 style="color:#4fc3f7;">Text List</h3>
+      <p>A dense, categorized list of text links. Can fit many more videos on a single slide but lacks visual impact.</p>
+    </div>
+  </div>
+</div>

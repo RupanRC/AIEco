@@ -25,4 +25,4 @@ A standalone, self-contained HTML page serving as a curated video playlist for t
 4.  **MCP & Advanced Topics** (Accent: Pink `#f48fb1`)
 
 ## 5. Content Sourcing Requirement
-During implementation, the agent must proactively source **real, high-quality YouTube videos** for each topic category from respected channels (e.g., 3Blue1Brown, Andrej Karpathy, Fireship, Anthropic/OpenAI official channels, IBM Technology, CopilotKit). Placeholder links are not acceptable for the final deliverable.
+During implementation, the agent must proactively source **real, high-quality YouTube videos** for each topic category from respected channels (e.g., 3Blue1Brown, Andrej Karpathy, Fireship, Anthropic/OpenAI official channels, IBM Technology, CopilotKit, AICodeKing). Placeholder links are not acceptable for the final deliverable.

@@ -1,0 +1,37 @@
+<h2>How should the Course Playlist be accessed?</h2>
+<p class="subtitle">Since it won't be a slide, how should users open this topic-based playlist?</p>
+
+<div class="cards">
+  <div class="card" data-choice="sidebar" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#1a1a2e;height:120px;position:relative;border-bottom:1px solid #2a2a40;overflow:hidden;">
+      <div style="position:absolute;top:10px;left:10px;right:60px;bottom:10px;background:#0f0f1a;border:1px solid #2a2a40;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#8888a0;font-size:10px;">Main Slide Content</div>
+      <div style="position:absolute;top:0;right:0;width:50px;bottom:0;background:#15152a;border-left:1px solid #4fc3f7;padding:10px 5px;">
+        <div style="font-size:8px;color:#4fc3f7;margin-bottom:4px;">Topic 1</div>
+        <div style="height:4px;background:#4fc3f7;border-radius:2px;margin-bottom:4px;"></div>
+        <div style="height:4px;background:#4fc3f7;border-radius:2px;margin-bottom:10px;"></div>
+        <div style="font-size:8px;color:#4fc3f7;margin-bottom:4px;">Topic 2</div>
+        <div style="height:4px;background:#4fc3f7;border-radius:2px;margin-bottom:4px;"></div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3 style="color:#4fc3f7;">Slide-out Sidebar</h3>
+      <p>A button in the navigation bar toggles a drawer from the side. It contains an accordion of topics and video links, accessible from any slide.</p>
+    </div>
+  </div>
+  
+  <div class="card" data-choice="modal" onclick="toggleSelect(this)">
+    <div class="card-image" style="background:#1a1a2e;height:120px;position:relative;border-bottom:1px solid #2a2a40;display:flex;align-items:center;justify-content:center;">
+      <div style="width:80%;height:80%;background:rgba(15,15,26,0.95);border:1px solid #ce93d8;border-radius:8px;display:flex;flex-direction:column;padding:10px;box-shadow:0 4px 10px rgba(0,0,0,0.5);">
+        <div style="height:8px;width:40%;background:#ce93d8;margin-bottom:8px;border-radius:2px;"></div>
+        <div style="display:flex;gap:5px;">
+           <div style="flex:1;height:40px;background:#2a2a40;border-radius:4px;"></div>
+           <div style="flex:1;height:40px;background:#2a2a40;border-radius:4px;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3 style="color:#ce93d8;">Full-Screen Overlay Modal</h3>
+      <p>Clicking "Video Course" opens a large pop-up covering the screen, allowing for a spacious, multi-column topic layout without leaving the presentation.</p>
+    </div>
+  </div>
+</div>
