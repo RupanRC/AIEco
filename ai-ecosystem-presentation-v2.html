@@ -629,8 +629,53 @@
     </div>
   </div>
 
-  <!-- SLIDE 2: The Big Picture -->
+
+  <!-- SLIDE 2: Contents -->
   <div class="slide" data-slide="2">
+    <p class="section-label animate-in delay-1">Agenda</p>
+    <h2 class="animate-in delay-2"><span class="emoji">📖</span>Overall Contents</h2>
+    <div class="content animate-in delay-3">
+      <div class="two-col" style="gap: 20px;">
+        <div class="col" style="padding: 16px;">
+          <h3 style="color: var(--accent-blue); font-size: 1.1rem; border-bottom: 1px solid var(--border); padding-bottom: 8px;">The Foundations</h3>
+          <ul style="list-style: none; padding-left: 0;">
+            <li style="padding: 8px 0; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='var(--accent-blue)'" onmouseout="this.style.color='var(--text)'" onclick="goToSlide(3)">▸ The Big Picture (Layer Stack)</li>
+            <li style="padding: 8px 0; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='var(--accent-blue)'" onmouseout="this.style.color='var(--text)'" onclick="goToSlide(4)">▸ AI vs. LLMs vs. APIs</li>
+            <li style="padding: 8px 0; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='var(--accent-blue)'" onmouseout="this.style.color='var(--text)'" onclick="goToSlide(8)">▸ API Providers & Free Tiers</li>
+          </ul>
+        </div>
+        <div class="col" style="padding: 16px;">
+          <h3 style="color: var(--accent-green); font-size: 1.1rem; border-bottom: 1px solid var(--border); padding-bottom: 8px;">Agents & Tools</h3>
+          <ul style="list-style: none; padding-left: 0;">
+            <li style="padding: 8px 0; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='var(--accent-green)'" onmouseout="this.style.color='var(--text)'" onclick="goToSlide(11)">▸ AI Agents & Skills</li>
+            <li style="padding: 8px 0; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='var(--accent-green)'" onmouseout="this.style.color='var(--text)'" onclick="goToSlide(14)">▸ Git: The Safety Net</li>
+            <li style="padding: 8px 0; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='var(--accent-green)'" onmouseout="this.style.color='var(--text)'" onclick="goToSlide(15)">▸ MCP (Model Context Protocol)</li>
+          </ul>
+        </div>
+        <div class="col" style="padding: 16px;">
+          <h3 style="color: var(--accent-orange); font-size: 1.1rem; border-bottom: 1px solid var(--border); padding-bottom: 8px;">Agentic Engineering</h3>
+          <ul style="list-style: none; padding-left: 0;">
+            <li style="padding: 8px 0; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='var(--accent-orange)'" onmouseout="this.style.color='var(--text)'" onclick="goToSlide(18)">▸ The Paradigm Shift & Architecture</li>
+            <li style="padding: 8px 0; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='var(--accent-orange)'" onmouseout="this.style.color='var(--text)'" onclick="goToSlide(20)">▸ Context Engineering</li>
+            <li style="padding: 8px 0; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='var(--accent-orange)'" onmouseout="this.style.color='var(--text)'" onclick="goToSlide(22)">▸ Research → Plan → Implement</li>
+          </ul>
+        </div>
+        <div class="col" style="padding: 16px;">
+          <h3 style="color: var(--accent-purple); font-size: 1.1rem; border-bottom: 1px solid var(--border); padding-bottom: 8px;">Practical Application</h3>
+          <ul style="list-style: none; padding-left: 0;">
+            <li style="padding: 8px 0; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='var(--accent-purple)'" onmouseout="this.style.color='var(--text)'" onclick="goToSlide(25)">▸ Agent Configuration</li>
+            <li style="padding: 8px 0; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='var(--accent-purple)'" onmouseout="this.style.color='var(--text)'" onclick="goToSlide(26)">▸ Use Cases & Future Outlook</li>
+            <li style="padding: 8px 0; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='var(--accent-purple)'" onmouseout="this.style.color='var(--text)'" onclick="goToSlide(28)">▸ OpenClaw CLI Agent</li>
+            <li style="padding: 8px 0; cursor: pointer; transition: color 0.2s;" onmouseover="this.style.color='var(--accent-purple)'" onmouseout="this.style.color='var(--text)'" onclick="goToSlide(30)">▸ Cheat Sheet</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 3: The Big Picture -->
+
+  <div class="slide" data-slide="3">
     <div class="notes" style="display:none">
       This diagram shows how everything builds on top of each other. Start at the bottom with AI and move up layer by layer to MCP. It's a full stack of concepts.
     </div>
@@ -673,7 +718,7 @@
   </div>
 
   <!-- SLIDE 3: AI -->
-  <div class="slide" data-slide="3">
+  <div class="slide" data-slide="4">
     <div class="notes" style="display:none">
       Emphasize here that AI is the broad category. Use real-world examples like self-driving cars and spam filters to contrast with text-based LLMs.
     </div>
@@ -696,7 +741,7 @@
   </div>
 
   <!-- SLIDE 4: LLM -->
-  <div class="slide" data-slide="4">
+  <div class="slide" data-slide="5">
     <p class="section-label animate-in delay-1">Layer 2</p>
     <h2 class="animate-in delay-2"><span class="emoji">📖</span>LLM — Large Language Model</h2>
     <div class="content animate-in delay-3">
@@ -722,7 +767,7 @@
   </div>
 
   <!-- SLIDE 5: Common Models -->
-  <div class="slide" data-slide="5">
+  <div class="slide" data-slide="6">
     <p class="section-label animate-in delay-1">Layer 2 — Details</p>
     <h2 class="animate-in delay-2"><span class="emoji">📖</span>Common LLMs</h2>
     <div class="content animate-in delay-3">
@@ -772,7 +817,7 @@
   </div>
 
   <!-- SLIDE 6: API -->
-  <div class="slide" data-slide="6">
+  <div class="slide" data-slide="7">
     <p class="section-label animate-in delay-1">Layer 3</p>
     <h2 class="animate-in delay-2"><span class="emoji">🔌</span>API — Application Programming Interface</h2>
     <div class="content animate-in delay-3">
@@ -804,7 +849,7 @@
   </div>
 
   <!-- SLIDE 7: API Providers -->
-  <div class="slide" data-slide="7">
+  <div class="slide" data-slide="8">
     <p class="section-label animate-in delay-1">Layer 4a</p>
     <h2 class="animate-in delay-2"><span class="emoji">🏢</span>API Providers</h2>
     <div class="content animate-in delay-3">
@@ -847,7 +892,7 @@
   </div>
 
   <!-- SLIDE 8: Unlocking Frontier Models -->
-  <div class="slide" data-slide="8">
+  <div class="slide" data-slide="9">
     <div class="notes" style="display:none">
       This is where we introduce the Google Cloud Platform (GCP) free tier. Focus on the 90 days aspect and how it removes the barrier to entry for trying top-tier models.
     </div>
@@ -869,7 +914,7 @@
   </div>
 
   <!-- SLIDE 9: Vertex AI & Model Garden -->
-  <div class="slide" data-slide="9">
+  <div class="slide" data-slide="10">
     <div class="notes" style="display:none">
       Explain Vertex AI and its Model Garden. Point out that GCP isn't just for Google's models—they can use their credits on Claude 3.5 Sonnet and Llama 3!
     </div>
@@ -896,7 +941,7 @@
   </div>
 
   <!-- SLIDE 10: AI Agents -->
-  <div class="slide" data-slide="10">
+  <div class="slide" data-slide="11">
     <p class="section-label animate-in delay-1">Layer 4b</p>
     <h2 class="animate-in delay-2"><span class="emoji">🤖</span>AI Agents</h2>
     <div class="content animate-in delay-3">
@@ -921,7 +966,7 @@
   </div>
 
   <!-- SLIDE 11: Agent Skills -->
-  <div class="slide" data-slide="11">
+  <div class="slide" data-slide="12">
     <p class="section-label animate-in delay-1">Layer 4b — Skills</p>
     <h2 class="animate-in delay-2"><span class="emoji">🎓</span>Agent Skills</h2>
     <div class="content animate-in delay-3">
@@ -960,7 +1005,7 @@
   </div>
 
   <!-- SLIDE 12: AI Coding Tools -->
-  <div class="slide" data-slide="12">
+  <div class="slide" data-slide="13">
     <p class="section-label animate-in delay-1">Layer 4b — Tools</p>
     <h2 class="animate-in delay-2"><span class="emoji">🤖</span>AI Coding Tools</h2>
     <div class="content animate-in delay-3">
@@ -991,7 +1036,7 @@
   </div>
 
   <!-- SLIDE 13: Git -->
-  <div class="slide" data-slide="13">
+  <div class="slide" data-slide="14">
     <p class="section-label animate-in delay-1">Essential Tool</p>
     <h2 class="animate-in delay-2"><span class="emoji">📦</span>Git — Version Control</h2>
     <div class="content animate-in delay-3">
@@ -1031,7 +1076,7 @@
   </div>
 
   <!-- SLIDE 14: MCP -->
-  <div class="slide" data-slide="14">
+  <div class="slide" data-slide="15">
     <p class="section-label animate-in delay-1">Layer 5</p>
     <h2 class="animate-in delay-2"><span class="emoji">🔗</span>MCP — Model Context Protocol</h2>
     <div class="content animate-in delay-3">
@@ -1067,7 +1112,7 @@
   </div>
 
   <!-- SLIDE 15: Full Flow -->
-  <div class="slide" data-slide="15">
+  <div class="slide" data-slide="16">
     <p class="section-label animate-in delay-1">Putting It Together</p>
     <h2 class="animate-in delay-2">The Complete Flow</h2>
     <div class="content animate-in delay-3">
@@ -1090,7 +1135,7 @@
   </div>
 
   <!-- SLIDE 16: Example Agent Workflow -->
-  <div class="slide" data-slide="16">
+  <div class="slide" data-slide="17">
     <p class="section-label animate-in delay-1">In Practice</p>
     <h2 class="animate-in delay-2"><span class="emoji">⚡</span>Example Agent Workflow</h2>
     <div class="content animate-in delay-3">
@@ -1111,191 +1156,348 @@
     </div>
   </div>
 
-  <!-- SLIDE 17: Pros and Cons -->
-  <div class="slide" data-slide="17">
-    <p class="section-label animate-in delay-1">Reality Check</p>
-    <h2 class="animate-in delay-2"><span class="emoji">⚖️</span>Pros & Cons of AI-Driven Development</h2>
-    <div class="content animate-in delay-3">
-      <div class="two-col">
-        <div class="col" style="border-color: var(--accent-green);">
-          <h3 style="color: var(--accent-green);">Pros</h3>
-          <ul>
-            <li>10x faster boilerplate generation</li>
-            <li>Agents handle repetitive tasks</li>
-            <li>Instant test writing & debugging</li>
-            <li>Context-aware code suggestions</li>
-            <li>Works while you focus on architecture</li>
-          </ul>
-        </div>
-        <div class="col" style="border-color: var(--accent-orange);">
-          <h3 style="color: var(--accent-orange);">Cons</h3>
-          <ul>
-            <li>Can introduce subtle bugs</li>
-            <li>Overconfident in wrong answers</li>
-            <li>Token costs add up on large codebases</li>
-            <li>Requires human review — never trust blindly</li>
-            <li>Context window limits on huge projects</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
 
-  <!-- SLIDE 18: Sub-Agent Driven Development -->
+  <!-- SLIDE 17: The Paradigm Shift -->
   <div class="slide" data-slide="18">
-    <p class="section-label animate-in delay-1">Advanced Patterns</p>
-    <h2 class="animate-in delay-2"><span class="emoji">🔀</span>Sub-Agent Driven Development</h2>
+    <p class="section-label animate-in delay-1">Agentic Engineering</p>
+    <h2 class="animate-in delay-2"><span class="emoji">🔄</span>The Paradigm Shift</h2>
     <div class="content animate-in delay-3">
-      <p>Instead of one agent doing everything, a <span class="highlight-purple">main agent delegates tasks to specialized sub-agents</span> that work in parallel — each in an isolated workspace.</p>
+      <p style="text-align: center; margin-bottom: 24px; font-size: 1.2rem; color: var(--text-dim);">From autocomplete to teammates</p>
+      
       <div class="concept-grid">
-        <div class="concept-card">
-          <h3>🤖 Main Agent (Orchestrator)</h3>
-          <p>Receives your high-level task, breaks it down, dispatches sub-agents, and merges results.</p>
+        <div class="concept-card" style="border-color: var(--text-dim);">
+          <h3 style="color: var(--text-dim);">📝 2020</h3>
+          <p style="font-weight: bold; margin-bottom: 8px;">Autocomplete</p>
+          <p>Finish your line</p>
         </div>
-        <div class="concept-card">
-          <h3>⚡ Parallel Execution</h3>
-          <p>Sub-agents run simultaneously on independent tasks. Frontend, backend, tests — all at once.</p>
+        <div class="concept-card" style="border-color: var(--accent-blue);">
+          <h3 style="color: var(--accent-blue);">🤖 2022</h3>
+          <p style="font-weight: bold; margin-bottom: 8px;">Copilots</p>
+          <p>Suggest functions</p>
         </div>
-        <div class="concept-card">
-          <h3>🌳 Git Worktrees</h3>
-          <p>Each sub-agent gets its own isolated branch + working directory. No conflicts, no overwrites.</p>
-        </div>
-        <div class="concept-card">
-          <h3>🔒 Isolation & Safety</h3>
-          <p>If a sub-agent breaks something, only its worktree is affected. Main branch stays clean.</p>
+        <div class="concept-card" style="border-color: var(--accent-purple); transform: scale(1.05);">
+          <h3 style="color: var(--accent-purple);">🧠 2025+</h3>
+          <p style="font-weight: bold; margin-bottom: 8px;">Agents</p>
+          <p>Execute tasks</p>
         </div>
       </div>
-      <div class="code-block" style="font-size: 0.8rem; padding: 14px;">
-<span class="comment"># Git worktrees — each sub-agent gets its own</span>
-<span class="key">git worktree add ../feat-auth origin/feat-auth</span>    <span class="comment"># Auth agent</span>
-<span class="key">git worktree add ../feat-api origin/feat-api</span>    <span class="comment"># API agent</span>
-<span class="key">git worktree add ../feat-tests origin/feat-tests</span>  <span class="comment"># Test agent</span>
-
-<span class="comment"># Each agent works independently in parallel</span>
-<span class="comment"># When done: review, merge, clean up</span>
-<span class="key">git worktree remove ../feat-auth</span>
-      </div>
-      <div class="analogy">
-        <div class="label">Analogy</div>
-        <strong>Single agent</strong> = one contractor doing plumbing, electrical, and painting sequentially.<br>
-        <strong>Sub-agents + worktrees</strong> = a team of specialists working in parallel, each in their own room.
+      
+      <div class="analogy" style="margin-top: 30px; text-align: center; border-left: none; border-top: 4px solid var(--accent-orange); border-radius: 8px;">
+        <div class="label">The Mental Model Shift</div>
+        <p style="font-size: 1.2rem; font-weight: bold; color: var(--accent-orange); margin-bottom: 12px;">AI as an energetic, enthusiastic junior developer</p>
+        <p style="font-style: italic;">"We are no longer just using machines, we are now working with them." - Armin Ronacher</p>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 19: Best Practices for Agents & Chat -->
+  <!-- SLIDE 18: Agent-Model Architecture -->
   <div class="slide" data-slide="19">
-    <p class="section-label animate-in delay-1">Best Practices</p>
-    <h2 class="animate-in delay-2"><span class="emoji">🛡️</span>Best Practices for Using Agents & Chat</h2>
+    <p class="section-label animate-in delay-1">Agentic Engineering</p>
+    <h2 class="animate-in delay-2"><span class="emoji">🏗️</span>The Agent-Model Architecture</h2>
     <div class="content animate-in delay-3">
-      <p>AI agents are powerful but need <span class="highlight-orange">guardrails</span>. These habits separate productive users from those who get burned.</p>
+      <p style="text-align: center; margin-bottom: 24px;">Three-way collaboration: You + Agent + Model</p>
+      
       <div class="concept-grid">
-        <div class="concept-card">
-          <h3>🎯 Be Specific</h3>
-          <p>"Add a POST /users endpoint with validation" beats "make a user API." Clear prompts = clear results.</p>
+        <div class="concept-card" style="border-color: var(--accent-blue);">
+          <h3 style="text-align: center; color: var(--accent-blue);">👤 You</h3>
+          <p style="text-align: center; font-weight: bold;">Direction & judgment</p>
+          <p style="text-align: center; color: var(--text-dim); margin-top: 8px;">The thinking</p>
         </div>
-        <div class="concept-card">
-          <h3>🔍 Always Review Changes</h3>
-          <p>Never blindly accept agent output. Read diffs, run tests, understand what changed before committing.</p>
+        <div class="concept-card" style="border-color: var(--accent-green);">
+          <h3 style="text-align: center; color: var(--accent-green);">🤖 Agent</h3>
+          <p style="text-align: center; font-weight: bold;">Runs locally in your IDE</p>
+          <p style="text-align: center; color: var(--text-dim); margin-top: 8px;">Kilo Code, Cursor, Claude Code</p>
         </div>
-        <div class="concept-card">
-          <h3>📦 Small Tasks, Not Monoliths</h3>
-          <p>Break big requests into steps. "Add auth" → "Create user model" → "Add login route" → "Add middleware."</p>
-        </div>
-        <div class="concept-card">
-          <h3>🔒 Protect Secrets</h3>
-          <p>Never paste API keys, passwords, or tokens into chat. Use environment variables and .env files.</p>
+        <div class="concept-card" style="border-color: var(--accent-purple);">
+          <h3 style="text-align: center; color: var(--accent-purple);">☁️ Model</h3>
+          <p style="text-align: center; font-weight: bold;">Runs in the cloud</p>
+          <p style="text-align: center; color: var(--text-dim); margin-top: 8px;">Claude, GPT, Gemini</p>
         </div>
       </div>
-      <div class="analogy">
-        <div class="label">Golden Rule</div>
-        Treat an AI agent like a <strong>fast but inexperienced junior developer</strong>. Give clear instructions, review their work, and never let them deploy unsupervised.
+      
+      <div class="analogy" style="margin-top: 30px; border-left-color: #ff5252; background: rgba(255, 82, 82, 0.1);">
+        <div class="label" style="color: #ff5252;">⚠️ Agents are an illusion</div>
+        <p><strong>Models are stateless.</strong> The only way to get better output is to put better tokens in.</p>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 20: Context Management -->
+  <!-- SLIDE 19: Context Engineering -->
   <div class="slide" data-slide="20">
-    <p class="section-label animate-in delay-1">Best Practices — Context</p>
-    <h2 class="animate-in delay-2"><span class="emoji">🧠</span>Context Management</h2>
+    <p class="section-label animate-in delay-1">Context Management</p>
+    <h2 class="animate-in delay-2"><span class="emoji">🎯</span>Context Engineering</h2>
     <div class="content animate-in delay-3">
-      <p>Every agent session has a <span class="highlight-purple">context window</span> — a finite "memory" that fills up as you chat. When it's full, the agent starts <strong>forgetting earlier messages</strong>.</p>
-      <div class="concept-grid">
-        <div class="concept-card">
-          <h3>⚠️ What Happens When Context Is Full</h3>
-          <p>The agent drops the oldest messages. It loses your original instructions, earlier decisions, and the reasoning behind them. Results get inconsistent or wrong.</p>
+      <p style="text-align: center; font-size: 1.2rem; margin-bottom: 24px;">What you put in determines what you get out — and it costs more than you think.</p>
+      
+      <div class="analogy" style="margin-bottom: 24px;">
+        "Context engineering is the delicate art and science of filling the context window with just the right information for the next step." — Andrej Karpathy
+      </div>
+      
+      <div class="two-col">
+        <div class="col" style="border-color: var(--accent-orange);">
+          <h3 style="color: var(--accent-orange);">Problem 1: Context is expensive</h3>
+          <ul style="margin-bottom: 12px;">
+            <li>10K tokens = ~$0.03</li>
+            <li>200K tokens = ~$0.60</li>
+            <li>600K tokens = $1.50+</li>
+          </ul>
+          <p style="color: var(--accent-orange); font-weight: bold;">More context ≠ better results. You're paying for noise.</p>
         </div>
-        <div class="concept-card">
-          <h3>✂️ Trim the Conversation</h3>
-          <p>Start a new session for a new task. Don't let one chat grow forever. Summarize what was decided, then reset.</p>
-        </div>
-        <div class="concept-card">
-          <h3>📌 Pin Key Information</h3>
-          <p>Use AGENTS.md, .clinerules, or pinned messages to store critical info. The agent reads these every session — they don't eat chat context.</p>
-        </div>
-        <div class="concept-card">
-          <h3>🗂️ Use Sub-Agents for Big Tasks</h3>
-          <p>Instead of one long conversation, dispatch sub-agents for independent work. Each gets a fresh context window.</p>
+        <div class="col" style="border-color: #ff5252;">
+          <h3 style="color: #ff5252;">Problem 2: Context makes models dumber</h3>
+          <div style="height: 12px; width: 100%; background: linear-gradient(to right, #81c784 0%, #ffb74d 50%, #ff5252 100%); border-radius: 6px; margin-bottom: 8px;"></div>
+          <div style="display: flex; justify-content: space-between; font-size: 0.8rem; color: var(--text-dim); margin-bottom: 12px;">
+            <span>Smart Zone (0-50%)</span>
+            <span>Dumb Zone (>50%)</span>
+          </div>
+          <p style="font-size: 0.95rem;"><strong>The MCP Trap:</strong> Loading every server starts you in the dumb zone.</p>
+          <p style="font-size: 0.95rem; margin-top: 8px;"><strong>The Benchmark:</strong> Stay under 50% utilization when possible.</p>
         </div>
       </div>
-      <div class="analogy">
-        <div class="label">Analogy</div>
-        Context window is like a <strong>whiteboard</strong>. When it's full, you have to erase the oldest stuff to make room. If you erase the wrong thing, the agent forgets what it was doing.
-      </div>
-      <div class="code-block" style="font-size: 0.8rem; padding: 14px;">
-<span class="comment">// Signs your context is overloaded</span>
-<span class="key">→</span> <span class="string">Agent repeats things you already told it</span>
-<span class="key">→</span> <span class="string">It ignores earlier instructions or constraints</span>
-<span class="key">→</span> <span class="string">Responses become generic or off-topic</span>
-<span class="key">→</span> <span class="string">It "forgets" decisions made 20+ messages ago</span>
 
-<span class="comment">// Fix: summarize + reset</span>
-<span class="key">"Here's what we've decided so far: [summary].</span>
-<span class="key"> Start a fresh session with this context."</span>
+      <div class="analogy" style="margin-top: 20px;">
+        <div class="label" style="color: #ff5252;">Problem 3: Bad Context Poisons Everything</div>
+        Once bad information (task mixing, massive logs, hallucinations) enters the context window, the model treats it as ground truth. <strong>The fix: Start a new session.</strong> Don't try to fix it — reset it.
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 21: Effective Prompt Patterns -->
+  <!-- SLIDE 20: 4 Ways to Manage Context -->
   <div class="slide" data-slide="21">
-    <p class="section-label animate-in delay-1">Best Practices — Prompts</p>
-    <h2 class="animate-in delay-2"><span class="emoji">💬</span>Effective Prompt Patterns</h2>
+    <p class="section-label animate-in delay-1">Context Management</p>
+    <h2 class="animate-in delay-2"><span class="emoji">🧠</span>Four Ways to Manage Context</h2>
+    <div class="content animate-in delay-3">
+      <p style="text-align: center; margin-bottom: 24px; color: var(--text-dim);">Every context engineering decision falls into one of these categories.</p>
+      
+      <div class="concept-grid">
+        <div class="concept-card" style="border-color: var(--accent-blue);">
+          <h3 style="color: var(--accent-blue);">✍️ Write Context</h3>
+          <p>Persist information <em>outside</em> the window so it's available without filling it up.</p>
+          <p style="color: var(--text-dim); margin-top: 8px; font-size: 0.85rem;">Scratchpads, memory files, CLAUDE.md</p>
+        </div>
+        <div class="concept-card" style="border-color: var(--accent-green);">
+          <h3 style="color: var(--accent-green);">🎯 Select Context</h3>
+          <p>Pull only what's relevant for <em>this step</em> — not everything that might be useful.</p>
+          <p style="color: var(--text-dim); margin-top: 8px; font-size: 0.85rem;">RAG, @-mentions, file references</p>
+        </div>
+        <div class="concept-card" style="border-color: var(--accent-orange);">
+          <h3 style="color: var(--accent-orange);">🗜️ Compress Context</h3>
+          <p>Reduce what's already in the window to just the tokens the task actually needs.</p>
+          <p style="color: var(--text-dim); margin-top: 8px; font-size: 0.85rem;">Summarization, trimming logs</p>
+        </div>
+        <div class="concept-card" style="border-color: var(--accent-purple);">
+          <h3 style="color: var(--accent-purple);">✂️ Isolate Context</h3>
+          <p>Split work across separate sessions so no single window accumulates everything.</p>
+          <p style="color: var(--text-dim); margin-top: 8px; font-size: 0.85rem;">Parallel agents, task separation</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 21: The Classic Mistake -->
+  <div class="slide" data-slide="22">
+    <p class="section-label animate-in delay-1">The Workflow</p>
+    <h2 class="animate-in delay-2"><span class="emoji">📋</span>Research → Plan → Implement</h2>
     <div class="content animate-in delay-3">
       <div class="two-col">
-        <div class="col" style="border-color: var(--accent-green);">
-          <h3 style="color: var(--accent-green);">Do This</h3>
-          <ul>
-            <li>Provide context: "In this Express app, add..."</li>
-            <li>Specify output format: "Return TypeScript with JSDoc"</li>
-            <li>Set constraints: "Max 30 lines, no external deps"</li>
-            <li>Ask for reasoning: "Explain before you code"</li>
-            <li>Iterate: "Now add error handling"</li>
-          </ul>
+        <div class="col" style="border-color: #ff5252; background: rgba(255,82,82,0.05);">
+          <h3 style="color: #ff5252;">❌ The Classic Mistake</h3>
+          <p style="font-weight: bold; margin-bottom: 12px;">"Hey AI, implement this feature"</p>
+          <div style="padding: 12px; background: rgba(0,0,0,0.3); border-radius: 8px; font-size: 0.9rem;">
+            Jump straight to code → wrong assumptions → wasted time → frustration
+          </div>
         </div>
-        <div class="col" style="border-color: var(--accent-orange);">
-          <h3 style="color: var(--accent-orange);">Avoid This</h3>
-          <ul>
-            <li>Vague requests: "Fix the app"</li>
-            <li>Assuming correctness without testing</li>
-            <li>Pasting entire codebases in one prompt</li>
-            <li>Letting agents modify production data</li>
-            <li>Skipping git commits before agent sessions</li>
-          </ul>
+        <div class="col" style="border-color: var(--accent-green); background: rgba(129,199,132,0.05);">
+          <h3 style="color: var(--accent-green);">✅ What Works</h3>
+          <p style="font-weight: bold; margin-bottom: 12px;">Research → Plan → Implement</p>
+          <div style="padding: 12px; background: rgba(0,0,0,0.3); border-radius: 8px; font-size: 0.9rem;">
+            Understand first → explicit steps → execute with confidence
+          </div>
         </div>
       </div>
-      <div class="code-block" style="font-size: 0.8rem; padding: 14px; margin-top: 16px;">
-<span class="comment">// Good prompt structure</span>
-<span class="key">Context:</span> <span class="string">"Express + TypeScript REST API"</span>
-<span class="key">Task:</span> <span class="string">"Add POST /api/users with email validation"</span>
-<span class="key">Constraints:</span> <span class="string">"Use Zod for validation, max 40 lines"</span>
-<span class="key">Output:</span> <span class="string">"Route file + one test case"</span>
-<span class="key">Rule:</span> <span class="string">"Explain your approach before coding"</span>
+      
+      <div class="analogy" style="margin-top: 24px; text-align: center;">
+        "A bad line of research = potentially hundreds of bad lines of code" — Dex Horthy
+      </div>
+      
+      <div class="flow" style="margin-top: 30px;">
+        <div class="flow-node" style="background: rgba(79,195,247,0.15); border: 1px solid var(--accent-blue); color: var(--accent-blue);">Phase 1: Research<br><span style="font-size:0.8rem; opacity:0.8;">Understand the system</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node" style="background: rgba(206,147,216,0.15); border: 1px solid var(--accent-purple); color: var(--accent-purple);">Phase 2: Plan<br><span style="font-size:0.8rem; opacity:0.8;">Outline exact steps</span></div>
+        <div class="flow-arrow">→</div>
+        <div class="flow-node" style="background: rgba(129,199,132,0.15); border: 1px solid var(--accent-green); color: var(--accent-green);">Phase 3: Implement<br><span style="font-size:0.8rem; opacity:0.8;">Execute with confidence</span></div>
       </div>
     </div>
   </div>
 
-  <!-- SLIDE 22: OpenClaw -->
-  <div class="slide" data-slide="22">
+  <!-- SLIDE 22: RPI Deep Dive -->
+  <div class="slide" data-slide="23">
+    <p class="section-label animate-in delay-1">The Workflow Deep Dive</p>
+    <h2 class="animate-in delay-2"><span class="emoji">🔍</span>Executing the RPI Framework</h2>
+    <div class="content animate-in delay-3">
+      <div class="concept-grid">
+        <div class="concept-card" style="border-color: var(--accent-blue);">
+          <h3 style="color: var(--accent-blue);">1. Research (Ask Mode)</h3>
+          <ul style="margin-bottom: 12px; padding-left: 0;">
+            <li><strong>Understand:</strong> How does this actually work?</li>
+            <li><strong>Find:</strong> Where does this code live?</li>
+            <li><strong>Stay objective:</strong> No implementation yet</li>
+          </ul>
+          <div style="padding: 8px; background: rgba(0,0,0,0.2); border-radius: 4px; font-size: 0.85rem;">
+            <strong>Output:</strong> Research Document (files, flow, edge cases)
+          </div>
+        </div>
+        
+        <div class="concept-card" style="border-color: var(--accent-purple);">
+          <h3 style="color: var(--accent-purple);">2. Plan (Architect Mode)</h3>
+          <ul style="margin-bottom: 12px; padding-left: 0;">
+            <li><strong>Outline:</strong> File & function names</li>
+            <li><strong>Include testing:</strong> How to verify</li>
+            <li><strong>Be explicit:</strong> What changes, what won't</li>
+          </ul>
+          <div style="padding: 8px; background: rgba(0,0,0,0.2); border-radius: 4px; font-size: 0.85rem;">
+            <strong>Output:</strong> Plan File (step-by-step instructions)
+          </div>
+        </div>
+        
+        <div class="concept-card" style="border-color: var(--accent-green);">
+          <h3 style="color: var(--accent-green);">3. Implement (Code Mode)</h3>
+          <ul style="margin-bottom: 12px; padding-left: 0;">
+            <li><strong>Execute:</strong> Step by step, no improvising</li>
+            <li><strong>Keep context low:</strong> Fresh task per step</li>
+            <li><strong>Commit frequently:</strong> Reversible changes</li>
+          </ul>
+          <div style="padding: 8px; background: rgba(0,0,0,0.2); border-radius: 4px; font-size: 0.85rem;">
+            <strong>Key Insight:</strong> Hard thinking is already done!
+          </div>
+        </div>
+      </div>
+      
+      <p style="text-align: center; margin-top: 20px; font-size: 1.1rem; color: var(--accent-orange); font-weight: bold;">
+        Human review at research and planning stages is the highest leverage use of your time.
+      </p>
+    </div>
+  </div>
+
+  <!-- SLIDE 23: The Habit -->
+  <div class="slide" data-slide="24">
+    <p class="section-label animate-in delay-1">Best Practices</p>
+    <h2 class="animate-in delay-2"><span class="emoji">🌱</span>The Habit That Ties It Together</h2>
+    <div class="content animate-in delay-3">
+      <p style="text-align: center; margin-bottom: 24px; color: var(--text-dim);">You don't need to think about all strategies on every task. You need one default behavior.</p>
+      
+      <div class="concept-grid">
+        <div class="concept-card" style="border-color: var(--accent-green);">
+          <h3 style="text-align: center; color: var(--accent-green);">1. One task per session</h3>
+          <p style="text-align: center; margin-top: 12px;">Finish the task, close the session. Start fresh for the next one.</p>
+        </div>
+        <div class="concept-card" style="border-color: var(--accent-orange);">
+          <h3 style="text-align: center; color: var(--accent-orange);">2. Watch the meter</h3>
+          <p style="text-align: center; margin-top: 12px;">If you're past 50%, you're already in the dumb zone. Wrap up or restart.</p>
+        </div>
+        <div class="concept-card" style="border-color: var(--accent-blue);">
+          <h3 style="text-align: center; color: var(--accent-blue);">3. When in doubt, restart</h3>
+          <p style="text-align: center; margin-top: 12px;">Something feels off? Don't debug the AI. Start a new session.</p>
+        </div>
+      </div>
+      
+      <div class="analogy" style="margin-top: 30px; text-align: center; border-left: none; border-bottom: 4px solid var(--accent-orange); border-radius: 8px;">
+        <p style="font-size: 1.3rem; font-weight: bold; color: var(--text);">Frequent new sessions aren't a sign of confusion — <span style="color: var(--accent-orange);">they're a sign of discipline.</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 24: Configuring Your Agent -->
+  <div class="slide" data-slide="25">
+    <p class="section-label animate-in delay-1">Tool Mastery</p>
+    <h2 class="animate-in delay-2"><span class="emoji">⚙️</span>Configuring Your Agent</h2>
+    <div class="content animate-in delay-3">
+      <div class="two-col">
+        <div class="col" style="border-color: var(--accent-teal);">
+          <h3 style="color: var(--accent-teal);">Mental Model for Configuration</h3>
+          <ul style="margin-bottom: 12px; padding-left: 0;">
+            <li><strong>AGENTS.md:</strong> Always-on rules ("README for AI agents"). Project conventions, build commands.</li>
+            <li><strong>SKILLS.md:</strong> Task-specific workflows (on-demand). Reusable playbooks.</li>
+            <li><strong>Modes:</strong> Personas with different behaviors (Architect, Coder).</li>
+          </ul>
+          <p style="color: var(--text-dim); font-size: 0.85rem; margin-top: 12px;"><em>Note: Memory Bank is being deprecated in favor of AGENTS.md + SKILLS.md</em></p>
+        </div>
+        <div class="col" style="border-color: var(--accent-blue);">
+          <h3 style="color: var(--accent-blue);">Working with Platform APIs</h3>
+          <ul style="margin-bottom: 12px; padding-left: 0;">
+            <li><strong>Swagger/OpenAPI:</strong> Pull directly via @file (Best for Standard REST)</li>
+            <li><strong>Markdown:</strong> Document in AGENTS.md (Best for stable internal APIs)</li>
+            <li><strong>URL/URI:</strong> Point to hosted docs (Best for rapidly changing APIs)</li>
+            <li><strong>MCP Server:</strong> Build a custom connector (Best for multi-step interactions)</li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="analogy" style="margin-top: 24px; text-align: center;">
+        <div class="label">Top Settings</div>
+        Start with defaults for Agent Behavior, Auto-Approve, and Autocomplete. Tune as you learn what works for your workflow.
+      </div>
+    </div>
+  </div>
+  <!-- SLIDE 25: Agentic Use Cases -->
+  <div class="slide" data-slide="26">
+    <p class="section-label animate-in delay-1">Applications</p>
+    <h2 class="animate-in delay-2"><span class="emoji">🚀</span>Use Cases for Agentic Engineering</h2>
+    <div class="content animate-in delay-3">
+      <div class="concept-grid">
+        <div class="concept-card">
+          <h3 style="color: var(--accent-blue);">💻 Automating Coding & Testing</h3>
+          <p>Generate boilerplate, write unit tests, and implement standard features rapidly.</p>
+        </div>
+        <div class="concept-card">
+          <h3 style="color: var(--accent-purple);">📄 SDD Generation</h3>
+          <p>Automatically generate and maintain Software Design Documents (SDD) based on codebase analysis.</p>
+        </div>
+        <div class="concept-card">
+          <h3 style="color: var(--accent-green);">🔍 Code Understanding</h3>
+          <p>Quickly map out legacy systems, trace data flows, and document undocumented code.</p>
+        </div>
+        <div class="concept-card">
+          <h3 style="color: var(--accent-orange);">📝 Task Creation & Maintenance</h3>
+          <p>Break down large features into actionable sub-tasks and manage project todo lists.</p>
+        </div>
+        <div class="concept-card" style="grid-column: 1 / -1; border-color: var(--accent-teal);">
+          <h3 style="color: var(--accent-teal);">🌿 Automated Git Management</h3>
+          <p>Agents can handle branching, committing, and rebasing — <span style="color: var(--accent-orange); font-weight: bold;">but you must explicitly instruct the agent to do so</span> to ensure safety and code review.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 26: Going Forward -->
+  <div class="slide" data-slide="27">
+    <p class="section-label animate-in delay-1">The Future</p>
+    <h2 class="animate-in delay-2"><span class="emoji">🔮</span>What to Keep in Mind Going Forward</h2>
+    <div class="content animate-in delay-3">
+      <p style="text-align: center; margin-bottom: 24px; color: var(--text-dim);">The AI ecosystem moves fast. Here is how to stay ahead.</p>
+      <div class="concept-grid">
+        <div class="concept-card" style="border-color: var(--accent-blue);">
+          <h3 style="color: var(--accent-blue);">🛠️ Track New Dev Tools</h3>
+          <p>Keep up to date with new tools for software development. The landscape changes frequently with new CLI agents, IDE extensions, and orchestrators.</p>
+        </div>
+        <div class="concept-card" style="border-color: var(--accent-green);">
+          <h3 style="color: var(--accent-green);">✨ Updated Models</h3>
+          <p>Watch for new frontier models. Capabilities jump significantly with each generation (e.g., Claude 3.5 to 3.7, GPT-4 to GPT-4.5).</p>
+        </div>
+        <div class="concept-card" style="border-color: var(--accent-orange);">
+          <h3 style="color: var(--accent-orange);">🔑 Access & API Keys</h3>
+          <p>Constantly research how to get free access, credits, or optimized API routing (like OpenRouter or GCP Free Tier) to minimize token costs.</p>
+        </div>
+        <div class="concept-card" style="border-color: var(--accent-purple);">
+          <h3 style="color: var(--accent-purple);">🛡️ Security & Best Practices</h3>
+          <p>Always stay informed about security updates. Never paste secrets, review agent code, and understand the data retention policies of your API providers.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SLIDE 27: OpenClaw -->
+  <div class="slide" data-slide="28">
     <p class="section-label animate-in delay-1">Tool Spotlight</p>
     <h2 class="animate-in delay-2"><span class="emoji">🦞</span>OpenClaw — Open-Source CLI AI Agent</h2>
     <div class="content animate-in delay-3">
@@ -1321,8 +1523,8 @@
     </div>
   </div>
 
-  <!-- SLIDE 23: OpenClaw Use Cases -->
-  <div class="slide" data-slide="23">
+  <!-- SLIDE 28: OpenClaw Use Cases -->
+  <div class="slide" data-slide="29">
     <p class="section-label animate-in delay-1">OpenClaw — In Action</p>
     <h2 class="animate-in delay-2"><span class="emoji">🦞</span>OpenClaw Use Cases</h2>
     <div class="content animate-in delay-3">
@@ -1371,8 +1573,8 @@
     </div>
   </div>
 
-  <!-- SLIDE 24: Quick Reference -->
-  <div class="slide" data-slide="24">
+  <!-- SLIDE 29: Quick Reference -->
+  <div class="slide" data-slide="30">
     <p class="section-label animate-in delay-1">Cheat Sheet</p>
     <h2 class="animate-in delay-2">Quick Reference Card</h2>
     <div class="content animate-in delay-3">
@@ -1432,8 +1634,8 @@
     </div>
   </div>
 
-  <!-- SLIDE 25: End -->
-  <div class="slide slide-title" data-slide="25">
+  <!-- SLIDE 30: End -->
+  <div class="slide slide-title" data-slide="31">
     <h1 class="animate-in delay-1">Questions?</h1>
     <p class="subtitle animate-in delay-2" style="margin-bottom: 30px;">From AI fundamentals to agents, MCP, and modern dev tools — you now know how it all connects.</p>
     <div class="topics animate-in delay-3" style="margin-bottom: 30px;">
@@ -1470,13 +1672,43 @@
 <!-- Navigation -->
 <div class="nav">
   <button id="prevBtn" onclick="changeSlide(-1)" disabled>← Previous</button>
-  <span class="slide-counter" id="slideCounter">1 / 25</span>
+  <span class="slide-counter" id="slideCounter">1 / 31</span>
   <button id="nextBtn" onclick="changeSlide(1)">Next →</button>
 </div>
 
 <script>
   let currentSlide = 1;
-  const totalSlides = 25;
+  const totalSlides = 31;
+
+  
+  function goToSlide(targetSlide) {
+    if (targetSlide < 1 || targetSlide > totalSlides || targetSlide === currentSlide) return;
+
+    const current = document.querySelector(`.slide[data-slide="${currentSlide}"]`);
+    const next = document.querySelector(`.slide[data-slide="${targetSlide}"]`);
+
+    if (targetSlide > currentSlide) {
+      current.classList.remove('active');
+      current.classList.add('exit-left');
+      setTimeout(() => current.classList.remove('exit-left'), 500);
+    } else {
+      current.classList.remove('active');
+    }
+
+    next.classList.add('active');
+    currentSlide = targetSlide;
+
+    document.getElementById('prevBtn').disabled = currentSlide === 1;
+    document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
+    document.getElementById('slideCounter').textContent = `${currentSlide} / ${totalSlides}`;
+    document.getElementById('progressBar').style.width = `${(currentSlide / totalSlides) * 100}%`;
+    
+    // Close grid mode if open
+    document.getElementById('presentation').classList.remove('grid-mode');
+    document.body.classList.remove('grid-active');
+    
+    updateNotes();
+  }
 
   function changeSlide(direction) {
     const newSlide = currentSlide + direction;
@@ -1565,19 +1797,7 @@
         const current = document.querySelector('.slide.active');
         if (current) current.classList.remove('active');
         
-        this.classList.add('active');
-        currentSlide = targetSlide;
-        
-        document.getElementById('prevBtn').disabled = currentSlide === 1;
-        document.getElementById('nextBtn').disabled = currentSlide === totalSlides;
-        document.getElementById('slideCounter').textContent = `${currentSlide} / ${totalSlides}`;
-        document.getElementById('progressBar').style.width = `${(currentSlide / totalSlides) * 100}%`;
-        
-        // Close grid mode
-        document.getElementById('presentation').classList.remove('grid-mode');
-        document.body.classList.remove('grid-active');
-        
-        updateNotes();
+        goToSlide(targetSlide);
       }
     });
   });
